@@ -13,7 +13,7 @@ OnLoop(function(myHero)
 Drawings()
 
           if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
+              local target = GetTarget(1000, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 1000) then
 				        
 						
