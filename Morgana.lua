@@ -15,8 +15,8 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(1100, DAMAGE_MAGIC)
+                if ValidTarget(target, 1100) then
                        
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,500,GetCastRange(myHero,_Q),80,true,true)
