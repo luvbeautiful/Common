@@ -18,8 +18,8 @@ Drawings()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(1500, DAMAGE_MAGIC)
+                if ValidTarget(target, 1500) then
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1500,250,GetCastRange(myHero,_Q),60,true,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
@@ -33,7 +33,7 @@ Drawings()
                         CastTargetSpell(target, _E)
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 750) and Config.R then
-                        CastTargetSpellSpell(target, _R)
+                        CastTargetSpell(target, _R)
 						end
                 end
         end
