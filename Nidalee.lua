@@ -13,13 +13,13 @@ Drawings()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(1200, DAMAGE_MAGIC)
+                if ValidTarget(target, 1200) then
                        
-                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1500,500,GetCastRange(myHero,_Q),40,true,true)
+                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1500,600,GetCastRange(myHero,_Q),40,true,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-			end
+						end
                 end
         end
 end)
