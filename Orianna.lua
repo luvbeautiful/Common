@@ -10,11 +10,11 @@ OnLoop(function(myHero)
 Drawings()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(900, DAMAGE_MAGIC)
+                if ValidTarget(target, 900) then
                        
                        
-                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),5000,0,GetCastRange(myHero,_Q),175,true,true)
+                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),900,0,GetCastRange(myHero,_Q),175,true,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
