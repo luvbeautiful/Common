@@ -15,8 +15,8 @@ Drawings()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(800, DAMAGE_MAGIC)
+                if ValidTarget(target, 800) then
 				
                         if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 600) and Config.Q then
                         CastTargetSpell(target, _Q)
