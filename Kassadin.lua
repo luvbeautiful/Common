@@ -18,7 +18,7 @@ Drawings()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_PHYSICAL)
+              local target = GetTarget(1000, DAMAGE_MAGICAL)
                 if ValidTarget(target, 1000) then
                        
                         local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),500,250,GetCastRange(myHero,_R),250,false,false)
