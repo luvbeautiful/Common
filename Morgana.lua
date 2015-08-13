@@ -15,11 +15,11 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1100, DAMAGE_MAGIC)
-                if ValidTarget(target, 1100) then
+              local target = GetTarget(1250, DAMAGE_MAGIC)
+                if ValidTarget(target, 1250) then
                        
                        
-                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,500,GetCastRange(myHero,_Q),80,true,true)
+                        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,400,GetCastRange(myHero,_Q),80,true,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
