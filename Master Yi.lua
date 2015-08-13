@@ -2,6 +2,8 @@ Config = scriptConfig("Master Yi", "Master Yi:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
+KSConfig = scriptConfig("KS", "Killsteal:")
+KSConfig.addParam("KSQ", "Killsteal with Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
  
@@ -9,6 +11,7 @@ myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
+Killsteal()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1000, DAMAGE_PHYSICAL)
@@ -26,7 +29,14 @@ Drawings()
                 end
         end
 end)
- 
+
+function Killsteal()
+	for i,enemy in pairs(GetEnemyHeroes()) do
+                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 140*GetBonusDmg(myHero))) then
+                 CastTargetSpell(enemy, _Q)
+            end
+      end
+end 
 
  
 function Drawings()
