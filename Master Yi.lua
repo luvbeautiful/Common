@@ -1,11 +1,9 @@
-Config = scriptConfig("Pantheon", "Pantheon:")
+Config = scriptConfig("Master Yi", "Master Yi:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-
-
- 
  
 myIAC = IAC()
  
@@ -16,16 +14,21 @@ Drawings()
         if IWalkConfig.Combo then
               local target = GetTarget(1000, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 1000) then
-				
-				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 600) and Config.Q then
+                       
+					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 600) and Config.Q then
                         CastTargetSpell(target, _Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 598) and Config.W then
-                        CastTargetSpell(target, _W)
+                        if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 300) and Config.R then
+                        CastSpell(_R)
+                        end
+						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 170) and Config.E then
+                        CastSpell(_E)
 						end
                 end
         end
 end)
+
+
  
 function Drawings()
 myHeroPos = GetOrigin(myHero)
