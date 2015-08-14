@@ -21,10 +21,10 @@ Drawings()
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
                         if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 650) and Config.W then
-                        CastTargeSpell(target, _W)
+                        CastTargetSpell(target, _W)
                         end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 650) and Config.E then
-                        CastTargeSpell(target, _E)
+                        CastTargetSpell(target, _E)
 						end
                 end
         end
