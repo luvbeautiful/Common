@@ -17,8 +17,8 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1300, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1300) then
+              local target = GetTarget(850, DAMAGE_PHYSICAL)
+                if ValidTarget(target, 850) then
                        
 					    if CanUseSpell(myHero, _Q) == READY and Config.Q then
 			        CastSpell(_Q)
