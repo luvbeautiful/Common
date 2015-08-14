@@ -24,7 +24,7 @@ Drawings()
 				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 200) and Config.Q then
                         CastSpell(_Q)
 						end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 165) and Config.W then
+						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 165) and Config.W then
                         CastSpell(_W)
 						end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),950,250,GetCastRange(myHero,_E),60,false,true)
