@@ -16,7 +16,7 @@ Drawings()
               local target = GetTarget(1000, DAMAGE_MAGICAL)
                 if ValidTarget(target, 1000) then
                        
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),950,400,GetCastRange(myHero,_Q),60,true,true)
+					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),950,400,GetCastRange(myHero,_Q),60,false,false)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
