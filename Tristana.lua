@@ -20,7 +20,7 @@ Killsteal()
               local target = GetTarget(1300, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 1300) then
                        
-					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target,GetCastRange(myHero,_Q)) and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 557) and Config.Q then
 			        CastSpell(_Q)
 						end
                         local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),900,700,GetCastRange(myHero,_W),290,false,false)
