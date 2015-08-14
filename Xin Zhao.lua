@@ -17,10 +17,10 @@ Drawings()
               local target = GetTarget(700, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 700) then
                        
-                        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 200) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 200) and Config.Q then
                         CastSpell(_Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 500) and Config.W then
+						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 250) and Config.W then
                         CastSpell(_W)
 						end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 650) and Config.E then
