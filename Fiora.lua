@@ -14,17 +14,17 @@ OnLoop(function(myHero)
 Drawings()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1000) then
+              local target = GetTarget(600, DAMAGE_PHYSICAL)
+                if ValidTarget(target, 600) then
                        
 					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),600,20,GetCastRange(myHero,_Q),250,false,true)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
                         if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 600) and Config.R then
                         CastTargetSpell(target, _R)
                         end
-						if CanUseSpell(myHero, _E) == READY and IsInDistance(target, 200) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and IsInDistance(target, 170) and Config.E then
                         CastSpell(_E)
 						end
                 end
