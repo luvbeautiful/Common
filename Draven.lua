@@ -20,10 +20,10 @@ Killsteal()
                 if ValidTarget(target, 1000) then
 
                        
-                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 551) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 551) and Config.W then
                         CastSpell(_W)
                         end
-						if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 550) and Config.Q then
+						if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 600) and Config.Q then
                         CastSpell(_Q)
 						end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),925,350,GetCastRange(myHero,_E),130,false,false)
