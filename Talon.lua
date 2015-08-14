@@ -20,7 +20,7 @@ Drawings()
               local target = GetTarget(750, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 750) then
 				
-				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 600) and Config.Q then
+				        if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 130) and Config.Q then
                         CastSpell(_Q)
                         end
 						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),800,250,GetCastRange(myHero,_W),80,false,true)
@@ -30,7 +30,7 @@ Drawings()
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 700) and Config.E then
                         CastTargetSpell(target, _E)
 						end
-						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 700) and Config.R then
+						if CanUseSpell(myHero, _R) == READY and IsInDistance(target, 560) and Config.R then
                         CastSpell(_R)
                         
 						end
