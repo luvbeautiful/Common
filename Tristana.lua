@@ -20,14 +20,14 @@ Killsteal()
               local target = GetTarget(1300, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 1300) then
                        
-					    if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 557) and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY and Config.Q then
 			        CastSpell(_Q)
 						end
                         local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),900,700,GetCastRange(myHero,_W),290,false,false)
                         if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                         end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 700) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and Config.E then
                         CastTargetSpell(target, _E)
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 700) and Config.R then
