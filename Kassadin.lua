@@ -21,7 +21,7 @@ Drawings()
               local target = GetTarget(1000, DAMAGE_MAGICAL)
                 if ValidTarget(target, 1000) then
                        
-                        local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),500,250,GetCastRange(myHero,_R),250,false,false)
+                        local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,300,450,270,false,false)
                         if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
