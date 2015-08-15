@@ -27,11 +27,11 @@ Drawings()
 						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 165) and Config.W then
                         CastSpell(_W)
 						end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),950,250,GetCastRange(myHero,_E),60,false,true)
+						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1700,300,950,60,false,false)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1000,250,GetCastRange(myHero,_R),150,false,true)
+						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1500,300,1000,150,false,false)
                         if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 	                    end
