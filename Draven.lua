@@ -40,7 +40,7 @@ end)
 
  function Killsteal()
 	      for i,enemy in pairs(GetEnemyHeroes()) do
-		       local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1000,250,GetCastRange(myHero,_R),160,false,false)
+		       local RPred = GetPredictionForPlayer(GetMyHeroPos(),enemy,GetMoveSpeed(enemy),3000,250,GetCastRange(myHero,_R),160,false,false)
                if CanUseSpell(myHero, _R) and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 110 + 1.10*GetBonusDmg(myHero))) then  
                CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 			   end
