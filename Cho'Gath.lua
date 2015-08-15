@@ -23,9 +23,8 @@ Killsteal()
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),700,100,GetCastRange(myHero,_W),300,false,true)
-						if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
-						CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
+						if CanUseSpell(myHero,_W) == READY and ValidTarget(target, 700) and Config.useW then
+		                CastSpell(_W)
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 600) and Config.R then
                         CastTargetSpell(target, _R)
