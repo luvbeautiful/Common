@@ -15,15 +15,15 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1200, DAMAGE_MAGIC)
-                if ValidTarget(target, 1200) then
+              local target = GetTarget(1000, DAMAGE_MAGIC)
+                if ValidTarget(target, 1000) then
                        
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,950,GetCastRange(myHero,_Q),250,false,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,700,GetCastRange(myHero,_W),175,false,true)
+						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),700,100,GetCastRange(myHero,_W),300,false,true)
 						if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
 						CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
 						end
@@ -34,14 +34,11 @@ Killsteal()
         end
 end)
  
-OnLoop(function(myHero)
- 
-       
-end)
+
  
 function Killsteal()
         for i,enemy in pairs(GetEnemyHeroes()) do
-            if CanUseSpell(myHero, _R) == READY and ValidTarget(enemy,GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (175*GetCastLevel(myHero,_R) +70*GetBonusAP(myHero))) then
+            if CanUseSpell(myHero, _R) == READY and ValidTarget(enemy,GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (175*GetCastLevel(myHero,_R) +100+0.70*GetBonusAP(myHero))) then
             CastTargetSpell(enemy, _R)
             end
       end
