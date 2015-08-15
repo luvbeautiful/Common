@@ -1,4 +1,4 @@
-Config = scriptConfig("ChoGath", "ChoGath:")
+Config = scriptConfig("Cho'Gath", "Cho'Gath:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
