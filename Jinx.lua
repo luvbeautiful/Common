@@ -22,9 +22,10 @@ Killsteal()
               local target = GetTarget(1150, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 1150) then
                        
-					    if CanUseSpell(myHero, _Q) == READY and GetDistance(myHero, enemy) > 570 and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY then
+                        if GetDistance(myHero, target) > 525 and GotBuff(myHero, "jinxqicon") > 0 then
                         CastSpell(_Q)
-						elseif CanUseSpell(myHero, _Q) == READY and GetDistance(myHero, enemy) < 525 and Config.Q then
+                        elseif GetDistance(myHero, target) < 570 and GotBuff(myHero, "JinxQ") > 0 then
                         CastSpell(_Q)
 						end
                         local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),3300,650,1500,60,true,true)
