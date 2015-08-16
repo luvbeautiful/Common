@@ -19,9 +19,7 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1150, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1150) then
-                       
+              local target = GetTarget(1600, DAMAGE_PHYSICAL)
 					    if CanUseSpell(myHero, _Q) == READY then
                         if GetDistance(myHero, target) > 525 and GotBuff(myHero, "jinxqicon") > 0 then
                         CastSpell(_Q)
