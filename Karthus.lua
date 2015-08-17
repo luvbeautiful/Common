@@ -21,10 +21,10 @@ Killsteal()
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-						if GotBuff(myHero, "KarthusDefile") ~= 1 then
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
-                        CastSpell(_E)
-						end
+						if CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") ~= 1 and IsInDistance(target,GetCastRange(myHero,_E)) and Config.E then
+						CastSpell(_E)
+						elseif CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") == 1 and not IsInDistance(target,GetCastRange(myHero,_E)) and Config.E then
+						CastSpell(_E)
 						end
                 end
         end
