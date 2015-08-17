@@ -32,7 +32,7 @@ Drawings()
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
 						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,300,1050,375,false,false)
-                        if CanUseSpell(myHero, _R) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
                 end
