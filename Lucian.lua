@@ -23,7 +23,7 @@ Drawings()
  local mousePos = GetMousePos()
                 if ValidTarget(target, 1300) then
                        
-                      If CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                      if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastTargetSpell(target, _Q)
 						end
 						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,300,100,80,true,true)
