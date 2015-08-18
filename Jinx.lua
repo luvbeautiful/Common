@@ -20,11 +20,14 @@ Killsteal()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1600, DAMAGE_PHYSICAL)
+			  if ValidTarget(target, 1150) then
+			  
 					    if CanUseSpell(myHero, _Q) == READY then
                         if GetDistance(myHero, target) > 525 and GotBuff(myHero, "jinxqicon") > 0 then
                         CastSpell(_Q)
                         elseif GetDistance(myHero, target) < 570 and GotBuff(myHero, "JinxQ") > 0 then
                         CastSpell(_Q)
+						end
 						end
                         local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),3300,650,1500,60,true,true)
                         if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
@@ -45,7 +48,7 @@ end)
 function Killsteal()
 	      for i,enemy in pairs(GetEnemyHeroes()) do
 		       local RPred = GetPredictionForPlayer(GetMyHeroPos(),enemy,GetMoveSpeed(enemy),1700,700,2000,140,false,true)
-               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 90 + 1.10*GetBonusDmg(myHero))) and GetDistance(myHero, enemy) < 5000 then  
+               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and RPred.HitChance == 1 and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, (GetMaxHP(enemy)-GetCurrentHP(enemy))*(0.2+0.05*GetCastLevel(myHero, _R))+(150+100*GetCastLevel(myHero, _R)+GetBonusDmg(myHero))*math.max(0.1, math.min(1, GetDistance(enemy)/1700))) and GetDistance(myHero, enemy) < 5000 then  
                CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 			   end
 		end
