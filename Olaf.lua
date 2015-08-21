@@ -25,7 +25,7 @@ Drawings()
 						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 200) and Config.W then
                         CastSpell(_W)
 						end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 325) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
 						CastTargetSpell(target, _E)
 						end
                 end
