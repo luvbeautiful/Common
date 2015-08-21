@@ -17,18 +17,18 @@ Drawings()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1400, DAMAGE_MAGICAL)
-                if ValidTarget(target, 1400) then
+              local target = GetTarget(1250, DAMAGE_MAGICAL)
+                if ValidTarget(target, 1250) then
                        
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,100,450,500,false,false)
+					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,100,450,500,false,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-                        local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,300,1500,70,true,true)
+                        local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,300,1500,70,true,false)
                         if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                         end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,300,925,100,false,false)
+						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,300,925,100,false,true)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
