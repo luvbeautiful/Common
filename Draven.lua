@@ -26,7 +26,7 @@ Killsteal()
 						if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 600) and Config.Q then
                         CastSpell(_Q)
 						end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1400,300,1100,130,false,false)
+						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1400,300,1100,130,false,true)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
