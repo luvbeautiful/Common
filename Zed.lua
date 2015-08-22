@@ -32,7 +32,6 @@ Drawings()
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 625) and Config.R then
 						CastTargetSpell(target, _R) 
-                        else DelayAction(function() CastSpell(_R) end, 60000)
 						end
                 end
         end
