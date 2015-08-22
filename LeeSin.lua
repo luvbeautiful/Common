@@ -33,7 +33,7 @@ Killsteal()
                         CastSpell(_E)
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
-                        CastTargeSpell(target, _R)
+                        CastTargetSpell(target, _R)
 						end
                 end
         end
