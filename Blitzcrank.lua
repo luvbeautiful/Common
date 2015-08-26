@@ -19,17 +19,17 @@ Drawings()
 Killsteal()
  
         if IWalkConfig.Combo then
-              local target = GetTarget(1150, DAMAGE_MAGIC)
-                if ValidTarget(target, 1150) then
-                       
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,300,1050,70,true,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+              local target = GetTarget(800, DAMAGE_MAGIC)
+              if ValidTarget(target, 1000) then
+                        
+					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,250,1050,70,true,false)
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1045) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
                         if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 600) and Config.W then
                         CastSpell(_W)
                         end
-						if CanUseSpell(myHero, _E) == READY and IsInDistance(target, 200) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and IsInDistance(target, 400) and Config.E then
                         CastSpell(_E)
 						end
 						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
@@ -41,7 +41,7 @@ end)
 
  function Killsteal()
 	      for i,enemy in pairs(GetEnemyHeroes()) do
-		       if CanUseSpell(myHero,_R) and ValidTarget(enemy, GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R)  + 0.99*GetBonusAP(myHero))) then
+		       if CanUseSpell(myHero,_R) and ValidTarget(enemy, GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R)  + 0.100*GetBonusAP(myHero))) then
                  CastSpell(_R)
 			   end
 		end
