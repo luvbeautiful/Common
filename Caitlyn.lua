@@ -10,6 +10,8 @@ DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+
 
  
 myIAC = IAC()
@@ -17,33 +19,49 @@ myIAC = IAC()
 OnLoop(function(myHero)
 Drawings()
 Killsteal()
- 
+local target = GetCurrentTarget()
+
         if IWalkConfig.Combo then
-              local target = GetTarget(1300, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1300) then
+              local target = GetTarget(1250, DAMAGE_PHYSICAL)
                        
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2200,625,1300,90,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1310) and Config.Q then
+					              local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2200,625,1300,90,false,false)
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1300) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-						end
+						             end
                         local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,100,800,70,false,false)
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, 800) and Config.W then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                         end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,200,1000,80,true,false)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
+						            local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,200,1000,80,true,false)
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, 1000) and Config.E then
                         CastSkillShot(_E,WPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
-						end
-						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
+					             	end
+						            if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastTargetSpell(target, _R)
-						end
+						           end
                 end
-        end
+
+
+        if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_Q) + 19 + 1.29*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
+    end
+
+    if CanUseSpell(myHero,_R) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (225*GetCastLevel(myHero,_R) + 24 + 1.99*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+    
+end
+
+
+     
 end)
  
 function Killsteal()
 	for i,enemy in pairs(GetEnemyHeroes()) do
-                 if CanUseSpell(myHero,_R) and ValidTarget(enemy, GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (225*GetCastLevel(myHero,_R)  + 0.200*GetBonusDmg(myHero))) then
+                 if CanUseSpell(myHero,_R) and ValidTarget(enemy, GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (225*GetCastLevel(myHero,_R) + 24 + 1.99*(GetBaseDamage(myHero) + GetBonusDmg(myHero)))) then
                  CastTargetSpell(enemy, _R)
             end
       end
