@@ -8,13 +8,13 @@ DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
  
 myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
-
+local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1150, DAMAGE_MAGIC)
@@ -29,12 +29,29 @@ Drawings()
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastTargetSpell(target, _E)
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,300,650,350,false,true)
+						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,300,650,350,false,false)
                         if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
                 end
         end
+
+
+        if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (10*GetCastLevel(myHero,_Q) + 30 + 0.55*(GetBonusAP(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
+    end
+
+if CanUseSpell(myHero,_E) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_E) + 15 + 0.5*(GetBonusAP(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+    
+end
+
+
+ 
 end)
 
 
