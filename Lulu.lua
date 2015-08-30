@@ -16,18 +16,42 @@ Drawings()
               local target = GetTarget(1000, DAMAGE_MAGICAL)
                 if ValidTarget(target, 1000) then
                        
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1450,300,950,60,false,false)
+					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1450,250,925,80,false,false)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
                         if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 650) and Config.W then
                         CastTargetSpell(target, _W)
+                    elseif 
                         end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 650) and Config.E then
                         CastTargetSpell(target, _E)
 						end
+                        for _, ally in pairs(GetAllyHeroes()) do
+                        if Config.R then
+                        if (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and
+                        CanUseSpell(myHero, _R) == READY and IsObjectAlive(ally) then
+                        CastTargetSpell(target, _R)
+                        end
+                        end
                 end
         end
+
+        if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.5*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+
+    if CanUseSpell(myHero,_E) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_E) + 50 + 0.4*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+  end
+    
+end
+
+
+     
 end)
  
 
