@@ -5,6 +5,7 @@ Config.addParam("E", "Use E To Mouse", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
 
  
  
@@ -13,7 +14,7 @@ myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
- 
+local target = GetCurrentTarget() 
  
         if IWalkConfig.Combo then
               local target = GetTarget(1300, DAMAGE_PHYSICAL)
@@ -27,7 +28,7 @@ elseif GotBuff(myHero, "lucianpassivebuff") > 1 then
 end
 end
 if Config.W then
-local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,300,GetCastRange(myHero, _W),80,true,true)
+local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,300,1000,80,true,true)
 if IsInDistance(target, GetCastRange(myHero, _W)) and GetDistance(myHero, enemy) < 700 and GotBuff(myHero, "lucianpassivebuff") == 0
     then CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
 elseif GotBuff(myHero, "lucianpassivebuff") > 1 then
@@ -42,6 +43,17 @@ local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),
                 end
         end
     end
+
+
+        if ValidTarget(target, 2000) and Config.DMG then
+            if CanUseSpell(myHero,_W) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_W) + 20 + 0.9*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+
+ end
+ 
+
 end)
  
 function Drawings()
