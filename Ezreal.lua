@@ -47,7 +47,6 @@ local target = GetCurrentTarget()
   if CanUseSpell(myHero,_Q) == READY then 
 local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_Q) + 15 + 1.1*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.4*(GetBonusAP(myHero)))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
     end
 
     if CanUseSpell(myHero,_W) == READY then 
