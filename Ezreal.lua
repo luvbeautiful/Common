@@ -10,14 +10,15 @@ DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
  
 myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
 Killsteal()
- 
+local target = GetCurrentTarget() 
+
         if IWalkConfig.Combo then
               local target = GetTarget(1150, DAMAGE_PHYSICAL)
 			  local mousePos = GetMousePos()
@@ -35,18 +36,40 @@ Killsteal()
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E, mousePos.x, mousePos.y, mousePos.z)
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,1100,2000,160,false,true)
+						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,1100,2000,160,false,false)
                         if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
                 end
         end
+
+        if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_Q) + 15 + 1.1*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.4*(GetBonusAP(myHero)))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
+    end
+
+    if CanUseSpell(myHero,_W) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_W) + 25 + 0.75*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+
+    if CanUseSpell(myHero,_R) == READY then 
+local trueDMG = CalcDamage(myHero, target, 0, (150*GetCastLevel(myHero,_R) + 150 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.90*(GetBonusAP(myHero)))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+    
+end
+
+
+     
 end)
 
  function Killsteal()
 	      for i,enemy in pairs(GetEnemyHeroes()) do
 		       local RPred = GetPredictionForPlayer(GetMyHeroPos(),enemy,GetMoveSpeed(enemy),2000,1100,2000,160,false,false)
-               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (250*GetCastLevel(myHero,_R) + 100 + 0.90*GetBonusDmg(myHero))) and GetDistance(myHero, enemy) < 5000 then  
+               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 150 + 1.0*GetBonusDmg(myHero))) and GetDistance(myHero, enemy) < 5000 then  
                CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 			   end
 		end
