@@ -21,7 +21,7 @@ local target = GetCurrentTarget()
                 if ValidTarget(target, 1000) then
 				
 				        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,670,650,250,false,true)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 700) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
                          if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 700) and Config.W then
