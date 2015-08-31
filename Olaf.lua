@@ -25,13 +25,15 @@ local target = GetCurrentTarget()
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
 						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 200) and Config.W then
+                             if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.6 then 
                         CastSpell(_W)
 						end
+                        end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
 						CastTargetSpell(target, _E)
 						end
                         if CanUseSpell(myHero, _R) == READY and ValidTarget(target, 1000) and Config.R then
-                         if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.70 then 
+                         if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.7 then 
                         CastSpell(_R)
                         end
                         end
