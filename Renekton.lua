@@ -23,16 +23,18 @@ local target = GetCurrentTarget()
 					    if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 225) and Config.Q then
                         CastSpell(_Q)
 						end
-                        if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 225) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and GetDistance(myHero, target) < 300 and Config.W then
                         CastSpell(_W)
                         end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),450,100,GetCastRange(myHero,_E),100,false,false)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _R) == READY and IsInDistance(target, 200) and Config.R then
+						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, 225) and Config.R then
+                         if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.75 then 
                         CastSpell(_R)
 						end
+                        end
                 end
         end
 
