@@ -5,6 +5,7 @@ KSConfig = scriptConfig("KS", "Killsteal:")
 KSConfig.addParam("KSQ", "Killsteal with Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
 
 
  
@@ -14,6 +15,7 @@ myIAC = IAC()
 OnLoop(function(myHero)
 Drawings()
 Killsteal()
+local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(600, DAMAGE_PHYSICAL)
@@ -27,11 +29,25 @@ Killsteal()
 						end
                 end
         end
+
+        if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_Q) + 20 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    end
+
+    if CanUseSpell(myHero,_E) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_E) + 6 + 1.2*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+    end
+
+ end
+ 
+
 end)
  
  function Killsteal()
 	for i,enemy in pairs(GetEnemyHeroes()) do
-                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 80 + 1.00*GetBonusDmg(myHero))) then
+                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 20 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero)))) then
                  CastTargetSpell(enemy, _Q)
             end
       end
