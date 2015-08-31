@@ -32,11 +32,12 @@ local target = GetCurrentTarget()
 
         if ValidTarget(target, 2000) and Config.DMG then
   if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_Q) + 20 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
-    if CanUseSpell(myHero,_E) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_E) + 6 + 1.2*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    if CanUseSpell(myHero,_W) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_W) + 25 + 1.0*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
@@ -47,7 +48,7 @@ end)
  
  function Killsteal()
 	for i,enemy in pairs(GetEnemyHeroes()) do
-                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 20 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero)))) then
+                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
                  CastTargetSpell(enemy, _Q)
             end
       end
