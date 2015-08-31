@@ -30,6 +30,11 @@ local target = GetCurrentTarget()
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
 						CastTargetSpell(target, _E)
 						end
+                        if CanUseSpell(myHero, _R) == READY and ValidTarget(target, 1000) and Config.R then
+                         if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.70 then 
+                        CastSpell(_R)
+                        end
+                        end
                 end
         end
 
