@@ -4,11 +4,13 @@ Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
  
 myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
+local target = GetCurrentTarget()
 
  
         if IWalkConfig.Combo then
@@ -26,6 +28,14 @@ Drawings()
 						end
                 end
         end
+         if ValidTarget(target, 2000) and Config.DMG then
+  if CanUseSpell(myHero,_Q) == READY then
+local trueDMG = CalcDamage(myHero, target, 0, (35*GetCastLevel(myHero,_Q) + 10 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    end
+
+ end
+ 
+
 end)
 
 
