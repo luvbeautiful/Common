@@ -20,10 +20,10 @@ local target = GetCurrentTarget()
               local target = GetTarget(500, DAMAGE_PHYSICAL)
                 if ValidTarget(target, 500) then
                        
-					    if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 225) and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 325) and Config.Q then
                         CastSpell(_Q)
 						end
-                        if CanUseSpell(myHero, _W) == READY and GetDistance(myHero, target) < 300 and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 400) and Config.W then
                         CastSpell(_W)
                         end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),450,100,GetCastRange(myHero,_E),100,false,false)
@@ -62,8 +62,8 @@ end)
  
 function Drawings()
 myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
+if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,400,3,100,0xff00ff00) end
+if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,325,3,100,0xff00ff00) end
+if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,450,3,100,0xff00ff00) end
+if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,225,3,100,0xff00ff00) end
 end
