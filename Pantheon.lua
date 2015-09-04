@@ -19,15 +19,13 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(600, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 600) then
 				
-				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 600) and Config.Q then
+				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 600) and Config.Q then
                         CastTargetSpell(target, _Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 600) and Config.W then
+						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 600) and Config.W then
                         CastTargetSpell(target, _W)
 						end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
@@ -48,7 +46,7 @@ end)
  
  function Killsteal()
 	for i,enemy in pairs(GetEnemyHeroes()) do
-                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, GetCastRange(myHero,_Q)) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, 600) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
                  CastTargetSpell(enemy, _Q)
             end
       end
