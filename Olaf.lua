@@ -18,13 +18,12 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1000, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1000) then
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,250,1000,90,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1000) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _W) == READY and GetDistance(myHero, target) < 300 and Config.W then
+						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 300) and Config.W then
                              if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.6 then 
                         CastSpell(_W)
 						end
@@ -37,7 +36,6 @@ local target = GetCurrentTarget()
                         CastSpell(_R)
                         end
                         end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
