@@ -5,6 +5,7 @@ KSConfig = scriptConfig("KS", "Killsteal:")
 KSConfig.addParam("KSR", "Killsteal with R", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
+DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
  
 myIAC = IAC()
@@ -16,19 +17,17 @@ local target = GetCurrentTarget()
 
         if IWalkConfig.Combo then
               local target = GetTarget(900, DAMAGE_MAGIC)
-                if ValidTarget(target, 900) then
                        
 					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,900,875,190,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 875) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-						if CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") ~= 1 and IsInDistance(target,GetCastRange(myHero,_E)) and Config.E then
+						if CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") ~= 1 and ValidTarget(target, 550) and Config.E then
 						CastSpell(_E)
-						elseif CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") == 1 and not IsInDistance(target,GetCastRange(myHero,_E)) and Config.E then
+						elseif CanUseSpell(myHero,_E) == READY and GotBuff(myHero,"KarthusDefile") == 1 and not ValidTarget(target, 550) and Config.E then
 						CastSpell(_E)
 						end
                 end
-        end
 
         if ValidTarget(target, 2000) and Config.DMG then
   if CanUseSpell(myHero,_Q) == READY then
@@ -64,4 +63,5 @@ end
 function Drawings()
 myHeroPos = GetOrigin(myHero)
 if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
+if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,550,3,100,0xff00ff00) end
 end
