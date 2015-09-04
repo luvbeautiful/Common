@@ -21,7 +21,6 @@ Killsteal()
 local target = GetCurrentTarget() 
         if IWalkConfig.Combo then
               local target = GetTarget(800, DAMAGE_MAGIC)
-              if ValidTarget(target, 1000) then
                         
 					              local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,250,1050,70,true,false)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1045) and Config.Q then
@@ -36,7 +35,6 @@ local target = GetCurrentTarget()
 						            if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSpell(_R)
 						            end
-                end
         end
 
 
