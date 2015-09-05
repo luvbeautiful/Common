@@ -20,12 +20,11 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1000, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1000) then
                        
-                        if CanUseSpell(myHero, _Q) == READY and GetDistance(myHero, target) < 300 and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 700) and GetDistance(myHero, target) < 300 and Config.Q then
                         CastSpell(_Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and GetDistance(myHero, target) < 300 and Config.W then
+						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 300) and GetDistance(myHero, target) < 300 and Config.W then
                         CastSpell(_W)
 						end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 650) and Config.E then
@@ -36,7 +35,6 @@ local target = GetCurrentTarget()
 						CastSpell(_R)
 						end
                     end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
