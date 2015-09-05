@@ -36,9 +36,6 @@ local target = GetCurrentTarget()
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastTargetSpell(target, _E)
 						end
-						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
-                        CastTargetSpell(target, _R)
-						end
         end
 
 
