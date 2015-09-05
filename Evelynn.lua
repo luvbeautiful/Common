@@ -17,12 +17,11 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1150, DAMAGE_MAGIC)
-                if ValidTarget(target, 1150) then
                        
-					    if CanUseSpell(myHero, _Q) == READY and IsInDistance(target, 500) and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 500) and Config.Q then
                         CastSpell(_Q)
 						end
-                        if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 600) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 600) and GetDistance(myHero, target) < 600 and Config.W then
                         CastSpell(_W)
                         end
 						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
@@ -33,7 +32,6 @@ local target = GetCurrentTarget()
                             if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.4 then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
-                    end
                 end
         end
 
