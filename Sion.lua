@@ -16,27 +16,27 @@ Drawings()
 local target = GetCurrentTarget()
 
           if IWalkConfig.Combo then
-              local target = GetTarget(2500, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 2500) then
+              local target = GetTarget(200, DAMAGE_PHYSICAL)
 				        
 						
 				        
                         local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2500,500,GetCastRange(myHero,_R),120,false,true)
-                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, 3000) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
                         end
                         local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,250,800,80,false,false)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 550) and Config.W then
-                        CastSpell(_W)
+						 if CanUseSpell(myHero, _W) == READY and Config.W and ValidTarget(target, 550) then
+                        if GetDistance(myHero, target) < 600 then
+                       CastSpell(_W)
 				        end
+                    end
 						local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),300,250,GetCastRange(myHero,_Q),600,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and EPred.HitChance == 1 and ValidTarget(target, 600) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
@@ -68,6 +68,6 @@ end)
 function Drawings()
 myHeroPos = GetOrigin(myHero)
 if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00fc00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00fc00) end
+if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,700,3,100,0xff00fc00) end
+if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,550,3,100,0xff00fc00) end
 end
