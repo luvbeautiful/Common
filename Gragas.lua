@@ -21,13 +21,12 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1300, DAMAGE_MAGIC)
-                if ValidTarget(target, 1300) then
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1000,300,1100,275,false,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-						if CanUseSpell(myHero, _W) == READY and GetDistance(myHero, target) < 300 and Config.W then
+						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 300) and GetDistance(myHero, target) < 300 and Config.W then
                         CastSpell(_W)
 						end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,0,950,200,true,true)
@@ -38,7 +37,6 @@ local target = GetCurrentTarget()
                         if CanUseSpell(myHero, _R) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
@@ -48,7 +46,7 @@ local trueDMG = CalcDamage(myHero, target, 0, (28*GetCastLevel(myHero,_Q) + 28 +
     end
 
     if CanUseSpell(myHero,_W) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_W) + 10 + 0.3*(GetBonusAP(myHero))))
+local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_W) - 10 + 0.3*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
@@ -71,7 +69,7 @@ end)
 function Killsteal()
         for i,enemy in pairs(GetEnemyHeroes()) do
 	           local RPred = GetPredictionForPlayer(GetMyHeroPos(),enemy,GetMoveSpeed(enemy),1750,250,1050,350,false,true)
-  	           if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(enemy,GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero,  enemy, 0, (100*GetCastLevel(myHero,_R) + 100 + 0.7*(GetBonusAP(myHero))) then 
+  	           if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(enemy,GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero,  enemy, 0, (100*GetCastLevel(myHero,_R) + 100 + 0.7*(GetBonusAP(myHero)))) then 
               CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
              end
       end
