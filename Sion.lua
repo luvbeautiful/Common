@@ -16,7 +16,7 @@ Drawings()
 local target = GetCurrentTarget()
 
           if IWalkConfig.Combo then
-              local target = GetTarget(200, DAMAGE_PHYSICAL)
+              local target = GetTarget(1000, DAMAGE_PHYSICAL)
 				        
 						
 				        
