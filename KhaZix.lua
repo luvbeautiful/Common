@@ -18,10 +18,9 @@ local target = GetCurrentTarget()
 
  
         if IWalkConfig.Combo then
-              local target = GetTarget(800, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 800) then
-                       
-                        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 420) and Config.Q then
+              local target = GetTarget(1000, DAMAGE_PHYSICAL)
+
+                        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastTargetSpell(target, _Q)
                         end
 						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1700,250,1025,73,true,false)
@@ -33,14 +32,16 @@ local target = GetCurrentTarget()
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
 						if CanUseSpell(myHero, _R) == READY and IsInDistance(target, 300) and Config.R then
+                            if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 then 
 						CastSpell(_R)
 						end
-                end
+                    end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
   if CanUseSpell(myHero,_Q) == READY then
 local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_Q) + 45 + 1.2*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
     if CanUseSpell(myHero,_W) == READY then
@@ -50,7 +51,6 @@ local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_W) + 50 +
 
     if CanUseSpell(myHero,_E) == READY then
 local trueDMG = CalcDamage(myHero, target, 0, (35*GetCastLevel(myHero,_E) + 30 + 0.2*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
- 
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
