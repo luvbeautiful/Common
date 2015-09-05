@@ -28,8 +28,7 @@ local target = GetCurrentTarget()
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						 if CanUseSpell(myHero, _W) == READY and Config.W and ValidTarget(target, 550) then
-                        if GetDistance(myHero, target) < 600 then
+						 if CanUseSpell(myHero, _W) == READY and Config.W and ValidTarget(target, 550) and GetDistance(myHero, target) < 600 then
                        CastSpell(_W)
 				        end
                     end
