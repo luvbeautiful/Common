@@ -19,7 +19,6 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1250, DAMAGE_MAGICAL)
-                if ValidTarget(target, 1250) then
                        
 					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,100,450,500,false,true)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
@@ -36,7 +35,6 @@ local target = GetCurrentTarget()
 						if CanUseSpell(myHero,_R) == READY and ValidTarget(target, 600) and Config.useR then
 		                 CastSpell(_R)
 						end
-                end
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
