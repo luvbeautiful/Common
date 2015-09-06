@@ -14,14 +14,11 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(900, DAMAGE_MAGIC)
-                if ValidTarget(target, 900) then
-                       
                        
                         local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,0,2000,80,false,true)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and IsInDistance(target, 2000) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 2000) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-                 end
 			
         end
 
