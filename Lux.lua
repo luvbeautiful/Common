@@ -1,14 +1,13 @@
 Config = scriptConfig("Lux", "Lux:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 KSConfig = scriptConfig("KS", "Killsteal:")
 KSConfig.addParam("KSR", "Killsteal with R", SCRIPT_PARAM_ONOFF, false)
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
 
 
@@ -23,12 +22,15 @@ local target = GetCurrentTarget()
  
         if IWalkConfig.Combo then
               local target = GetTarget(1500, DAMAGE_MAGIC)
-                if ValidTarget(target, 1500) then
 				
 				        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1200,250,1300,70,true,false)
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 					           	end
+                      local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,250,1050,80,false,false)
+                      if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 and CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                        CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
+                     end
 						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1300,300,1100,300,false,true)
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
@@ -36,8 +38,7 @@ local target = GetCurrentTarget()
 						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,1000,3500,110,false,true)
                         if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
-					             end
-                end      
+					             end 
         end
 
         if ValidTarget(target, 2000) and Config.DMG then
