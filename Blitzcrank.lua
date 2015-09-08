@@ -26,10 +26,10 @@ local target = GetCurrentTarget()
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 1045) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						            end
-                        if CanUseSpell(myHero, _W) == READY and IsInDistance(target, 600) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 600) and Config.W then
                         CastSpell(_W)
                         end
-						            if CanUseSpell(myHero, _E) == READY and IsInDistance(target, 400) and Config.E then
+						            if CanUseSpell(myHero, _E) == READY and ValidTarget(target, 400) and Config.E then
                         CastSpell(_E)
 						            end
 						            if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
@@ -66,7 +66,7 @@ end
  
 function Drawings()
 myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
+if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,600,3,100,0xff00ff00) end
 if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
 if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
 if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
