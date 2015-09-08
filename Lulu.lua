@@ -1,16 +1,19 @@
 Config = scriptConfig("Lulu", "Lulu:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("SE", "Use E", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig = scriptConfig("Drawings", "Drawings:")
 DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
 DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
+Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
  
 myIAC = IAC()
  
 OnLoop(function(myHero)
 Drawings()
+local target = GetCurrentTarget() 
  
         if IWalkConfig.Combo then
               local target = GetTarget(1000, DAMAGE_MAGICAL)
@@ -20,20 +23,22 @@ Drawings()
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 650) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
                         CastTargetSpell(target, _W)
-                    elseif 
                         end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 650) and Config.E then
-                        CastTargetSpell(target, _E)
-						end
                         for _, ally in pairs(GetAllyHeroes()) do
+						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
+                        CastTargetSpell(target, _E)
+                    elseif CanUseSpell(myHero, _E) == READY and ValidTarget(ally, GetCastRange(myHero,_E)) and (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and Config.SE then
+                        CastTargetSpell(ally, _E)
+						end
                         if Config.R then
                         if (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and
                         CanUseSpell(myHero, _R) == READY and IsObjectAlive(ally) then
-                        CastTargetSpell(target, _R)
+                        CastTargetSpell(ally, _R)
                         end
                         end
+                    end
                 end
         end
 
