@@ -13,7 +13,6 @@ YasuoiMenu.Drawings:Boolean("Q", "Draw Q Range", true)
 YasuoiMenu.Drawings:Boolean("E", "Draw E Range", true)
 YasuoiMenu.Drawings:Boolean("R", "Draw R Range", true)
  
- 
 OnLoop(function(myHero)
  
         if IOW:Mode() == "Combo" then
@@ -38,27 +37,6 @@ OnLoop(function(myHero)
 
         end
 
-       if IOW:Mode() == "DMG" then
-
-
-  if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = GoS:CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_Q) + 0 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_E) == READY then
-local trueDMG = GoS:CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_E) + 50 + 0.6*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_R) == READY then
-local trueDMG = GoS:CalcDamage(myHero, target, 0, (100*GetCastLevel(myHero,_R) + 100 + 1.5*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-
-
- end
  
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
