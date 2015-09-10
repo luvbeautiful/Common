@@ -22,7 +22,6 @@ OnLoop(function(myHero)
                      if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 then
                         CastTargetSpell(myHero, _E)
                     end
-                end
 end
 
 if NidaleeiMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
