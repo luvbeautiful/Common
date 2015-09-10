@@ -1,4 +1,4 @@
-BlitzcrankiMenu = Menu("Blitzcran", "Blitzcran")
+BlitzcrankiMenu = Menu("Blitzcrank", "Blitzcran")
 BlitzcrankiMenu:SubMenu("Combo", "Combo")
 BlitzcrankiMenu.Combo:Boolean("Q", "Use Q", true)
 BlitzcrankiMenu.Combo:Boolean("W", "Use W", true)
@@ -8,6 +8,7 @@ BlitzcrankiMenu.Combo:Boolean("R", "Use R", true)
 BlitzcrankiMenu:SubMenu("Drawings", "Drawings")
 BlitzcrankiMenu.Drawings:Boolean("Q", "Draw Q Range", true)
 BlitzcrankiMenu.Drawings:Boolean("R", "Draw R Range", true)
+
 
 BlitzcrankiMenu:SubMenu("Killsteal", "Killsteal")
 BlitzcrankiMenu.Killsteal:Boolean("R", "Killsteal with R", true)
@@ -40,7 +41,6 @@ if CanUseSpell(myHero,_R) and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) an
                  CastSpell(_R)
 
 end
-
  
 if BlitzcrankiMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
 if BlitzcrankiMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
