@@ -47,8 +47,8 @@ for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,1100,60,true,false)
 
 
-if CanUseSpell(myHero, _R) and  GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and BrandiMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*(GetBonusAP(myHero)))) then
-                 CastSpell(_R)
+if CanUseSpell(myHero, _R) == READY and  GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and BrandiMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*(GetBonusAP(myHero)))) then
+                 CastTargetSpell(target, _R)
 
 elseif CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(enemy, GetCastRange(myHero,_Q)) and BrandiMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 40 + 0.65*(GetBonusAP(myHero)))) then 
     CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
