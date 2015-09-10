@@ -1,4 +1,4 @@
-BlitzcrankiMenu = Menu("Blitzcrank", "Blitzcran")
+BlitzcrankiMenu = Menu("Blitzcrank", "Blitzcrank")
 BlitzcrankiMenu:SubMenu("Combo", "Combo")
 BlitzcrankiMenu.Combo:Boolean("Q", "Use Q", true)
 BlitzcrankiMenu.Combo:Boolean("W", "Use W", true)
