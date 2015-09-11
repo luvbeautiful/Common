@@ -1,76 +1,47 @@
-Config = scriptConfig("Ahri", "Ahri:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R To Mouse", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+AhriMenu = Menu("Ahri", "Ahri")
+AhriMenu:SubMenu("Combo", "Combo")
+AhriMenu.Combo:Boolean("Q", "Use Q", true)
+AhriMenu.Combo:Boolean("W", "Use W", true)
+AhriMenu.Combo:Boolean("E", "Use E", true)
+AhriMenu.Combo:Boolean("R", "Use R", true)
 
- 
- 
-myIAC = IAC()
+AhriMenu:SubMenu("Drawings", "Drawings")
+AhriMenu.Drawings:Boolean("Q", "Draw Q Range", true)
+AhriMenu.Drawings:Boolean("W", "Draw W Range", true)
+AhriMenu.Drawings:Boolean("E", "Draw E Range", true)
+AhriMenu.Drawings:Boolean("R", "Draw R Range", true)
  
 OnLoop(function(myHero)
-Drawings()
-local target = GetCurrentTarget()
  
-        if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGICAL)
- local mousePos = GetMousePos()
-                       
-                        local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),500,0,GetCastRange(myHero,_R),250,false,true)
-                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and GetDistance(myHero, target) < 1000 and Config.R then
+        if IOW:Mode() == "Combo" then
+
+                       local mousePos = GetMousePos()
+                        local target = GetCurrentTarget()
+                local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1750,250,925,60,false,false)
+                 local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),500,0,GetCastRange(myHero,_R),250,false,true)  
+                 local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1550,250,1000,60,true,false)
+
+
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and GoS:ValidTarget(target, 1000) then 
+                         if GoS:GetDistance(myHero, target) < 1000 and AhriMenu.Combo.R:Value() then
                         CastSkillShot(_R, mousePos.x, mousePos.y, mousePos.z)
 						end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                    end
+						if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and AhriMenu.Combo.W:Value() then
                         CastSpell(_W)
 						end
-                        local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1550,250,1000,60,true,false)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and AhriMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
                         end
-					   local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1750,250,925,60,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and AhriMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
         end
 
-
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_Q) + 15 + 0.35*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
-    end
-
-    if CanUseSpell(myHero,_W) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_W) + 15 + 0.4*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-if CanUseSpell(myHero,_E) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (35*GetCastLevel(myHero,_E) + 25 + 0.5*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_R) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_R) + 30 + 0.3*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-    
-end
-
+if AhriMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if AhriMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
+if AhriMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xff00ff00) end
+if AhriMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,3,100,0xff00ff00) end
 
 
 end)
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
-end
