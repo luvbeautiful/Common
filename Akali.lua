@@ -1,4 +1,4 @@
-AkaliMenu = Menu("Ahri", "Ahri")
+AkaliMenu = Menu("Akali", "Akali")
 AkaliMenu:SubMenu("Combo", "Combo")
 AkaliMenu.Combo:Boolean("Q", "Use Q", true)
 AkaliMenu.Combo:Boolean("W", "Use W", true)
