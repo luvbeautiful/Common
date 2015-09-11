@@ -44,7 +44,7 @@ OnLoop(function(myHero)
 
  
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
-
+local target = GetCurrentTarget()
 local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,1100,60,true,false)
 
 
