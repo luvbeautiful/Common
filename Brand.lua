@@ -52,7 +52,7 @@ if CanUseSpell(myHero, _Q) == READY and BrandMenu.Killsteal.Q:Value() and QPred.
     CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
  
 
-elseif CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and BrandiMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*(GetBonusAP(myHero)))) then
+elseif CanUseSpell(myHero, _R) and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and BrandMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*(GetBonusAP(myHero)))) then
                  CastTargetSpell(target, _R)
 end
 
