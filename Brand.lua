@@ -45,7 +45,7 @@ OnLoop(function(myHero)
  
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 local target = GetCurrentTarget()
-local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,1100,60,true,false)
+local QPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),2000,250,1100,60,true,false)
 
 
 if CanUseSpell(myHero, _Q) == READY and BrandMenu.Killsteal.Q:Value() and QPred.HitChance == 1 and GoS:ValidTarget(enemy,GetCastRange(myHero,_Q)) and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 40 + 0.65*GetBonusAP(myHero))) then 
@@ -53,7 +53,7 @@ if CanUseSpell(myHero, _Q) == READY and BrandMenu.Killsteal.Q:Value() and QPred.
  
 
 elseif CanUseSpell(myHero, _R) and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and BrandMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*GetBonusAP(myHero))) then
-                 CastTargetSpell(target, _R)
+                 CastTargetSpell(enemy, _R)
 end
 
 if BrandMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
