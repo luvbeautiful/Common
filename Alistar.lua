@@ -1,50 +1,45 @@
-Config = scriptConfig("Alistar", "Alistar:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
- 
-myIAC = IAC()
+AlistarMenu = Menu("Alistar", "Alistar")
+AlistarMenu:SubMenu("Combo", "Combo")
+AlistarMenu.Combo:Boolean("Q", "Use Q", true)
+AlistarMenu.Combo:Boolean("W", "Use W", true)
+AlistarMenu.Combo:Boolean("E", "Use E", true)
+AlistarMenu.Combo:Boolean("R", "Use R", true)
+
+AlistarMenu:SubMenu("Drawings", "Drawings")
+AlistarMenu.Drawings:Boolean("Q", "Draw Q Range", true)
+AlistarMenu.Drawings:Boolean("W", "Draw W Range", true)
+AlistarMenu.Drawings:Boolean("E", "Draw E Range", true)
  
 OnLoop(function(myHero)
-Drawings()
  
-        if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
+        if IOW:Mode() == "Combo" then
+                        local target = GetCurrentTarget()
                        
-                       if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and IsInDistance(target, 360) and Config.Q then
+                       if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and GoS:IsInDistance(target, 360) and AlistarMenu.Combo.Q:Value() then
                         CastSpell(_Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and IsInDistance(target, 650) and Config.W then
+						if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and GoS:IsInDistance(target, 650) and AlistarMenu.Combo.W:Value() then
                         CastTargetSpell(target, _W)
 						end
-                        for _, ally in pairs(GetAllyHeroes()) do
-                        if Config.E then
+                        for _, ally in pairs(GoS:GetAllyHeroes()) do
+                        if AlistarMenu.Combo.E:Value() then
                         if (GetCurrentHP(ally)/GetMaxHP(ally))<0.7 and 
-                        CanUseSpell(myHero, _E) == READY and IsInDistance(ally, 575) then
+                        CanUseSpell(myHero, _E) == READY and GoS:IsInDistance(ally, 575) then
                         CastSpell(_E)
                         elseif  CanUseSpell(myHero, _E) == READY and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.7 then
                             CastSpell(_E)
                         end
                         end
                         end
-                        if CanUseSpell(myHero, _R) == READY and Config.R then
-                        if (GetCurrentHP(myHero)/GetMaxHP(myHero))>0.4 then
+                        if CanUseSpell(myHero, _R) == READY and AlistarMenu.Combo.R:Value() then
+                        if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.4 then
                         CastSpell(_R)   
                     end
                 end
                 end
-end)
- 
+if AlistarMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if AlistarMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
+if AlistarMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xff00ff00) end
 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-end
+
+end)
