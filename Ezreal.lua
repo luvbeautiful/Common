@@ -1,81 +1,65 @@
-Config = scriptConfig("Ezreal", "Eazreal:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E To Mouse", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-KSConfig = scriptConfig("KS", "Killsteal:")
-KSConfig.addParam("KSR", "Killsteal with R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
- 
-myIAC = IAC()
+EzrealMenu = Menu("Ezrael", "Ezrael")
+EzrealMenu:SubMenu("Combo", "Combo")
+EzrealMenu.Combo:Boolean("Q", "Use Q", true)
+EzrealMenu.Combo:Boolean("W", "Use W", true)
+EzrealMenu.Combo:Boolean("E", "Use E", true)
+EzrealMenu.Combo:Boolean("R", "Use R", true)
+
+EzrealMenu:SubMenu("Killsteal", "Killsteal:")
+EzrealMenu.Killsteal:Boolean("R", "Killsteal with R", true)
+
+
+EzrealMenu:SubMenu("Drawings", "Drawings:")
+EzrealMenu.Drawings:Boolean("E","Draw E", true)
+EzrealMenu.Drawings:Boolean("W","Draw W", true)
+EzrealMenu.Drawings:Boolean("R","Draw R", true)
+EzrealMenu.Drawings:Boolean("Q","Draw Q", true)
  
 OnLoop(function(myHero)
-Drawings()
-Killsteal()
-local target = GetCurrentTarget() 
 
-        if IWalkConfig.Combo then
-              local target = GetTarget(1150, DAMAGE_PHYSICAL)
-			  local mousePos = GetMousePos()
-                       
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,250,1200,60,true,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+local target = GetCurrentTarget()
+local mousePos = GetMousePos()
+
+if IOW:Mode() == "Combo" then
+			  local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,1200,60,true,false)
+             local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1600,250,1050,80,false,false)          
+			local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,100,475,750,false,true)		    
+            local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),20000,1000,2000,160,false,false)
+
+
+
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and EzrealMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-                        local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1600,250,1050,80,false,false)
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                        
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and EzrealMenu.Combo.W:Value() then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                         end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,100,475,750,false,true)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, 500) and Config.E then
+						
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, 500) and EzrealMenu.Combo.E:Value() then
                         CastSkillShot(_E, mousePos.x, mousePos.y, mousePos.z) 
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),20000,1000,2000,160,false,false)
-                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, 2000) and Config.R then
+						
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and EzrealMenu.Combo.R:Value() then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
-        end
-
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_Q) + 15 + 1.1*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.4*(GetBonusAP(myHero)))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end
 
-    if CanUseSpell(myHero,_W) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_W) + 20 + 0.80*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
 
-    if CanUseSpell(myHero,_R) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (150*GetCastLevel(myHero,_R) + 200 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.90*(GetBonusAP(myHero)))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-    
-end
+	      for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
-
-     
-end)
-
- function Killsteal()
-	      for i,enemy in pairs(GetEnemyHeroes()) do
-		       local RPred = GetPredictionForPlayer(GetMyHeroPos(),enemy,GetMoveSpeed(enemy),2000,1000,2000,160,false,false)
-               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and ValidTarget(enemy, GetCastRange(myHero, _R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 200 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.90*(GetBonusAP(myHero))))) and GetDistance(myHero, enemy) < 5000 then  
+            local RPred = GetPredictionForPlayer(Gos:myHeroPos(),enemy,GetMoveSpeed(enemy),2000,1000,2000,160,false,false)
+		       
+               if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and GoS:ValidTarget(enemy, GetCastRange(myHero, _R)) and EzrealMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 100 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.90*(GetBonusAP(myHero)))),0) and GoS:GetDistance(myHero, enemy) < 5000 then  
                CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 			   end
-		end
-end	 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,500,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
 end
+
+
+if EzrealMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if EzrealMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
+if EzrealMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,500,3,100,0xff00ff00) end
+if EzrealMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
+
+
+    end)
