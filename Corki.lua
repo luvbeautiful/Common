@@ -1,64 +1,40 @@
-Config = scriptConfig("Corki", "Corki:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true) 
+CorkiMenu = Menu("Corki", "Corki")
+CorkiMenu:SubMenu("Combo", "Combo")
+CorkiMenu.Combo:Boolean("Q", "Use Q", true)
+CorkiMenu.Combo:Boolean("E", "Use E", true)
+CorkiMenu.Combo:Boolean("R", "Use R", true)
+
+CorkiMenu:SubMenu("Drawings", "Drawings")
+CorkiMenu.Drawings:Boolean("Q", "Draw Q Range", true)
+CorkiMenu.Drawings:Boolean("W", "Draw W Range", true)
+CorkiMenu.Drawings:Boolean("E", "Draw E Range", true)
+CorkiMenu.Drawings:Boolean("R", "Draw R Range", true)
  
-myIAC = IAC()
  
 OnLoop(function(myHero)
-Drawings()
-local target = GetCurrentTarget()
  
-        if IWalkConfig.Combo then
-              local target = GetTarget(1400, DAMAGE_PHYSICAL)
-                       
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1125,500,825,270,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 825) and Config.Q then
+        if IOW:Mode() == "Combo" then
+                        local target = GetCurrentTarget()
+
+                     local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1125,500,825,270,false,false)
+                      local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,0,600,350,false,false)
+                      local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,175,1300,40,true,true)
+
+
+
+					    
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 825) and CorkiMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,0,600,350,false,false)
-						if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, 600) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, 600) and CorkiMenu.Combo.E:Value() then
 						CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2000,175,1300,40,true,true)
-                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and CorkiMenu.Combo.R:Value() then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
-        end
-
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_Q) + 30 + 0.5*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.5*(GetBonusAP(myHero)))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
-    end
-
-    if CanUseSpell(myHero,_E) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (6*GetCastLevel(myHero,_E) + 4 + 0.2*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_R) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (80*GetCastLevel(myHero,_R) + 20 + 0.3*(GetBonusAP(myHero))))
-   DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-    
-end
-
-
-     
+  end                      
+if CorkiMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if CorkiMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
+if CorkiMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xff00ff00) end
+if CorkiMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
 end)
- 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,600,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
-end
