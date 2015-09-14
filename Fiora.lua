@@ -1,56 +1,43 @@
-Config = scriptConfig("Fiora", "Fiora:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
- 
-myIAC = IAC()
+FioraMenu = Menu("Fiora", "Fiora")
+FioraMenu:SubMenu("Combo", "Combo")
+FioraMenu.Combo:Boolean("Q", "Use Q", true)
+FioraMenu.Combo:Boolean("E", "Use E", true)
+FioraMenu.Combo:Boolean("R", "Use R", true)
+
+FioraMenu:SubMenu("Drawings", "Drawings:")
+FioraMenu.Drawings:Boolean("Q","Draw Q", true)
+FioraMenu.Drawings:Boolean("E","Draw E", true)
+FioraMenu.Drawings:Boolean("R","Draw R", true)
  
 OnLoop(function(myHero)
-Drawings()
+
+
 local target = GetCurrentTarget()
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(600, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 600) then
+
+
+
+if IOW:Mode() == "Combo" then
                        
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,0,750,250,false,true)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 750) and Config.Q then
+					    local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,0,750,250,false,true)
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 750) and FioraMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-                        if CanUseSpell(myHero, _R) == READY and ValidTarget(target, 500) and Config.R then
+                        if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, 500) and FioraMenu.Combo.R:Value() then
                         CastTargetSpell(target, _R)
-                        end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, 170) and Config.E then
+                    end
+						if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 300) and FioraMenu.Combo.E:Value() then
                         CastSpell(_E)
 						end
-                end
-        end
-
-
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (10*GetCastLevel(myHero,_Q) + 55 + (15*GetCastLevel(myHero,_Q) + (GetBaseDamage(myHero) + GetBonusDmg(myHero)))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
-    end
-
 end
 
 
  
+ 
+
+
+if FioraMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,750,3,100,0xff00ff00) end
+if FioraMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,300,3,100,0xff00ff00) end
+if FioraMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,GetCastRange(myHero,_R),3,100,0xff00ff000) end
+
+
 end)
- 
-
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,750,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff000) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff000) end
-end
