@@ -12,9 +12,9 @@ local target = GetCurrentTarget()
 local mousePos = GetMousePos()
 
 if IOW:Mode() == "Combo" then
-              local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,0,2000,80,false,true)
+              local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,0,900,80,false,true)
                        
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and OriannaMenu.Combo.Q:Value() then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 900) and OriannaMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
 			
