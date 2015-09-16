@@ -1,42 +1,36 @@
-Config = scriptConfig("Teemo", "Teemo:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+TeemoMenu = Menu("Teemo", "Teemo")
+TeemoMenu:SubMenu("Combo", "Combo")
+TeemoMenu.Combo:Boolean("Q", "Use Q", true)
+
+TeemoMenu:SubMenu("Killsteal", "Killsteal:")
+TeemoMenu.Killsteal:Boolean("Q", "Killsteal with Q", true)
+ 
+TeemoMenu:SubMenu("Drawings", "Drawings:")
+TeemoMenu.Drawings:Boolean("Q","Draw Q", true)
 
  
- 
-myIAC = IAC()
- 
 OnLoop(function(myHero)
-Drawings()
+
+
 local target = GetCurrentTarget()
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGICAL)
-                if ValidTarget(target, 1000) then
+
+
+
+if IOW:Mode() == "Combo" then
                        
                      
-						if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+						if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and TeemoMenu.Combo.Q:Value() then
                         CastTargetSpell(target, _Q)
 						end
                 end
+
+          for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+               if CanUseSpell(myHero, _Q) and GoS:ValidTarget(enemy, GetCastRange(myHero, _Q)) and TeemoMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.8*(GetBonusAP(myHero)))) then
+               CastTargetSpell(target, _Q)
+               end
         end
 
 
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then 
-local trueDMG = CalcDamage(myHero, target, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.8*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff00ff00)
-    end
-    
-end
-
-
+if TeemoMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
 
 end)
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-end
