@@ -34,7 +34,7 @@ if IOW:Mode() == "Combo" then
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and KhaZixMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _R) == READY and GoS:IsInDistance(target, 300) and KhaZixMenu.Combo.R:Value() then
+						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, 300) and KhaZixMenu.Combo.R:Value() then
                             if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 then 
 						CastSpell(_R)
 						end
