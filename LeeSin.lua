@@ -1,74 +1,57 @@
-Config = scriptConfig("Lee Sin", "Lee Sin:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-KSConfig = scriptConfig("KS", "Killsteal:")
-KSConfig.addParam("KSR", "Killsteal with R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+LeeSinMenu = Menu("LeeSin", "LeeSin")
+LeeSinMenu:SubMenu("Combo", "Combo")
+LeeSinMenu.Combo:Boolean("Q", "Use Q", true)
+LeeSinMenu.Combo:Boolean("W", "Use W", true)
+LeeSinMenu.Combo:Boolean("E", "Use E", true)
 
- 
-myIAC = IAC()
+LeeSinMenu:SubMenu("Killsteal", "Killsteal:")
+LeeSinMenu.Killsteal:Boolean("R", "Killsteal with R", true)
+
+
+
+LeeSinMenu:SubMenu("Drawings", "Drawings:")
+LeeSinMenu.Drawings:Boolean("Q","Draw Q", true)
+LeeSinMenu.Drawings:Boolean("W","Draw W", true)
+LeeSinMenu.Drawings:Boolean("E","Draw E", true)
+LeeSinMenu.Drawings:Boolean("R","Draw R", true)
+
  
 OnLoop(function(myHero)
-Drawings()
-Killsteal()
-local target = GetCurrentTarget()
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(1150, DAMAGE_PHYSICAL)
 
-					    local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1800,250,1100,60,true,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+
+local target = GetCurrentTarget()
+
+
+
+if IOW:Mode() == "Combo" then
+                            local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,1100,60,true,false)
+
+
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and LeeSinMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and GetDistance(myHero, target) < 300 and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and GoS:GetDistance(myHero, target) < 300 and LeeSinMenu.Combo.W:Value() then
                             if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 then
                         CastSpell(_W)
                     end
                         end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, 425) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 350) and LeeSinMenu.Combo.E:Value() then
                         CastSpell(_E)
 						end
         end
 
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_Q) + 20 + 0.9*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
 
-    if CanUseSpell(myHero,_E) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (35*GetCastLevel(myHero,_E) + 25 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_R) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (200*GetCastLevel(myHero,_R) + 0 + 2.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
- end
- 
-
-end)
-
- function Killsteal()
-        for i,enemy in pairs(GetEnemyHeroes()) do
-            if CanUseSpell(myHero, _R) == READY and ValidTarget(enemy,GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (200*GetCastLevel(myHero,_R) + 2.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero)))) then
+        for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+            if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(enemy,GetCastRange(myHero,_R)) and LeeSinMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, (200*GetCastLevel(myHero,_R) + 2.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0) then
             CastTargetSpell(enemy, _R)
             end
       end
-end 
  
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,425,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
-end
+
+if LeeSinMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if LeeSinMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
+if LeeSinMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,350,3,100,0xff00ff00) end
+if LeeSinMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
+
+
+    end)
