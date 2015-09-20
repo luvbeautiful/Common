@@ -2,12 +2,14 @@ MorganaMenu = Menu("Morgana", "Morgana")
 MorganaMenu:SubMenu("Combo", "Combo")
 
 MorganaMenu.Combo:Boolean("Q", "Use Q", true)
-MorganaMenu.Combo:Boolean("W", "Use W", true)
+MorganaMenu.Combo:Boolean("SW", "Use W on enemies hit by Q/R ", true)
+MorganaMenu.Combo:Boolean("W", "Use W", false)
 MorganaMenu.Combo:Boolean("E", "Use Ally E", true)
 MorganaMenu.Combo:Boolean("R", "Use R", true)
 
 MorganaMenu:SubMenu("Killsteal", "Killsteal")
-MorganaMenu.Killsteal:Boolean("Q", "Killsteal with Q", false)
+MorganaMenu.Killsteal:Boolean("Q", "Killsteal with Q", true)
+MorganaMenu.Killsteal:Boolean("W", "Killsteal with W", true)
 
 MorganaMenu:SubMenu("Drawings", "Drawings:")
 MorganaMenu.Drawings:Boolean("Q", "Draw Q", true)
@@ -33,7 +35,7 @@ OnLoop(function(myHero)
                      local target = GetCurrentTarget()
 
                      local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,250,1300,80,true,false)
-                     local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,100,900,175,false,false)
+                     local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,216,900,280,false,false)
 
 
 
@@ -42,18 +44,21 @@ OnLoop(function(myHero)
 
                        
                         
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and MorganaMenu.Combo.Q:Value() then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1300) and MorganaMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-						if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and MorganaMenu.Combo.W:Value() then
+						if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 900) and MorganaMenu.Combo.W:Value() then
 						CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
 						end
+                        if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 900) and MorganaMenu.Combo.SW:Value() and GotBuff(target, "DarkBindingMissile") == 1 or GotBuff(target, "Stun") == 1 then
+                        CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z) 
+                    end
                         for _, ally in pairs(GoS:GetAllyHeroes()) do                        
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(ally, GetCastRange(myHero,_E)) and MorganaMenu.Combo.E:Value() and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(ally, 750) and MorganaMenu.Combo.E:Value() and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 then
                         CastTargetSpell(ally, _E)
                         end
                     end
-						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and MorganaMenu.Combo.R:Value() then
+						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, 625) and MorganaMenu.Combo.R:Value() then
                         CastSpell(_R)
 						end
         end
@@ -78,15 +83,19 @@ end
       for i,enemy in pairs(GoS:GetEnemyHeroes()) do
             
             local QPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),1200,250,1300,80,true,false)
+                     local WPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),0,216,900,280,false,false)
 
             if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(enemy,GetCastRange(myHero,_Q)) and MorganaMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (55*GetCastLevel(myHero,_Q) + 25 + 0.9*(GetBonusAP(myHero)))) then
             CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
             end
+            if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(enemy,GetCastRange(myHero,_W)) and MorganaMenu.Killsteal.W:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (6*GetCastLevel(myHero,_Q) + 2 + 0.11*(GetBonusAP(myHero)))) then
+            CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
+            end
         end
  
-if MorganaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if MorganaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if MorganaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
-if MorganaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
+if MorganaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1300,3,100,0xff00ff00) end
+if MorganaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,750,3,100,0xff00ff00) end
+if MorganaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,625,3,100,0xff00ff00) end
+if MorganaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xff00ff00) end
 
 end)
