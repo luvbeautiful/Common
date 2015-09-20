@@ -63,11 +63,11 @@ OnLoop(function(myHero)
 
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
-if CanUseSpell(myHero,_Q) == READY and GoS:ValidTarget(enemy, 1300) and LuluMenu.DMG.Q:Value() then
+if CanUseSpell(myHero,_Q) == READY and GoS:ValidTarget(enemy, 2000) and LuluMenu.DMG.Q:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.5*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
 end
-if CanUseSpell(myHero,_E) == READY and GoS:ValidTarget(enemy, 1300) and LuluMenu.DMG.E:Value() then 
+if CanUseSpell(myHero,_E) == READY and GoS:ValidTarget(enemy, 2000) and LuluMenu.DMG.E:Value() then 
 local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (30*GetCastLevel(myHero,_E) + 50 + 0.4*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
   end
