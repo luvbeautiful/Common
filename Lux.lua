@@ -26,13 +26,13 @@ LuxMenu.DMG:Boolean("R", "Draw R Dmg", true)
 OnLoop(function(myHero)
 
 
-local target = GetCurrentTarget()
 
 
 
 if IOW:Mode() == "Combo" then
 
 
+local target = GetCurrentTarget()
 
 
 				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,250,1300,70,true,false)       
@@ -66,10 +66,10 @@ if IOW:Mode() == "Combo" then
 
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
         
-  if CanUseSpell(myHero,_Q) == READY and LuxMenu.DMG.Q:Value() and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) then
+  if CanUseSpell(myHero,_Q) == READY and LuxMenu.DMG.Q:Value() and GoS:ValidTarget(target, 2000) then
 local trueDMG = GoS:CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_Q) + 10 + 0.7*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    elseif CanUseSpell(myHero,_E) == READY and LuxMenu.DMG.E:Value() and GoS:ValidTarget(target, GetCastRange(myHero,_E)) then
+    elseif CanUseSpell(myHero,_E) == READY and LuxMenu.DMG.E:Value() and GoS:ValidTarget(target, 2000) then
 local trueDMG = GoS:CalcDamage(myHero, target, 0, (45*GetCastLevel(myHero,_E) + 15 + 0.6*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     elseif CanUseSpell(myHero,_R) == READY and LuxMenu.DMG.R:Value() and GoS:ValidTarget(target, GetCastRange(myHero,_R)) then
