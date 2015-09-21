@@ -54,7 +54,7 @@ OnLoop(function(myHero)
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z) 
                     end
                         for _, ally in pairs(GoS:GetAllyHeroes()) do                        
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(ally, 750) and MorganaMenu.Combo.E:Value() and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 1300) and GoS:GetDistance(myHero, ally) <= 750 and MorganaMenu.Combo.E:Value() and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 then
                         CastTargetSpell(ally, _E)
                         end
                     end
