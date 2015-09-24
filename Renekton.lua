@@ -1,69 +1,70 @@
-Config = scriptConfig("Renekton", "Renekton:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
- 
-myIAC = IAC()
+RenektonMenu = Menu("Renekton", "Renekton")
+RenektonMenu:SubMenu("Combo", "Combo")
+RenektonMenu.Combo:Boolean("Q", "Use Q", true)
+RenektonMenu.Combo:Boolean("W", "Use W", true)
+RenektonMenu.Combo:Boolean("E", "Use E", true)
+RenektonMenu.Combo:Boolean("R", "Use R", true)
+
+RenektonMenu:SubMenu("Drawings", "Drawings:")
+RenektonMenu.Drawings:Boolean("Q", "Draw Q", true)
+RenektonMenu.Drawings:Boolean("W", "Draw W", true)
+RenektonMenu.Drawings:Boolean("E", "Draw E", true)
+RenektonMenu.Drawings:Boolean("R", "Draw R", true)
+
+
+RenektonMenu:SubMenu("DMG", "Draw DMG")
+RenektonMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
+RenektonMenu.DMG:Boolean("W", "Draw W Dmg", true)
+RenektonMenu.DMG:Boolean("E", "Draw E Dmg", true)
+
  
 OnLoop(function(myHero)
-Drawings()
-local target = GetCurrentTarget()
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(500, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 500) then
-                       
-					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 325) and Config.Q then
+
+  
+
+
+           if  IOW:Mode() == "Combo" then
+                     local target = GetCurrentTarget()
+
+
+					    if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 325) and RenektonMenu.Combo.Q:Value() then
                         CastSpell(_Q)
 						end
-                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 400) and Config.W then
+                        if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 400) and RenektonMenu.Combo.W:Value() then
                         CastSpell(_W)
                         end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),450,100,GetCastRange(myHero,_E),100,false,false)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
+                        local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,450,50,false,false)
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GetCastName(myHero, _E) == "RenektonSliceAndDice" and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and RenektonMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, 225) and Config.R then
-                         if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.75 then 
+                        local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,450,50,false,false)
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GetCastName(myHero, _E) == "renektondice" and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and RenektonMenu.Combo.E:Value() then
+                        CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
+                        end
+						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, enemy) <= 300 and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.65 and RenektonMenu.Combo.R:Value() then
                         CastSpell(_R)
-						end
                         end
                 end
-        end
 
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_Q) + 30 + 0.8*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
 
-    if CanUseSpell(myHero,_W) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (20*GetCastLevel(myHero,_W) + 10 + 1.5*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
-    if CanUseSpell(myHero,_E) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_E) + 30 + 0.9*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-
- end
- 
-
-end)
- 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,400,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,325,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,450,3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,225,3,100,0xff00ff00) end
+for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+if GoS:ValidTarget(enemy, 2000) and RenektonMenu.DMG.Q:Value() and CanUseSpell(myHero,_Q) == READY then
+local trueDMG = GoS:CalcDamage(myHero, enemy, (30*GetCastLevel(myHero,_Q) - 30 + 0.8*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
+DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+elseif GoS:ValidTarget(enemy, 2000) and RenektonMenu.DMG.W:Value() and CanUseSpell(myHero,_W) == READY then
+local trueDMG = GoS:CalcDamage(myHero, enemy, (10*GetCastLevel(myHero,_W) + 5 + 0.8*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
+DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+elseif GoS:ValidTarget(enemy, 2000) and RenektonMenu.DMG.E:Value() and CanUseSpell(myHero,_E) == READY then
+local trueDMG = GoS:CalcDamage(myHero, enemy, (30*GetCastLevel(myHero,_E) - 30 + 0.8*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
+DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
 end
+
+end
+
+if RenektonMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,325,3,100,0xff00ff00) end
+if RenektonMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,400,3,100,0xff00ff00) end
+if RenektonMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,450,3,100,0xff00ff00) end
+if RenektonMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,210,3,100,0xff00ff00) end
+
+ end)
+ 
