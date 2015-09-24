@@ -1,58 +1,58 @@
-Config = scriptConfig("Pantheon", "Pantheon:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-KSConfig = scriptConfig("KS", "Killsteal:")
-KSConfig.addParam("KSQ", "Killsteal with Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+PantheonMenu = Menu("Pantheon", "Pantheon")
+PantheonMenu:SubMenu("Combo", "Combo")
+PantheonMenu.Combo:Boolean("Q", "Use Q", true)
+PantheonMenu.Combo:Boolean("W", "Use W", true)
+
+PantheonMenu:SubMenu("Killsteal", "Killsteal")
+PantheonMenu.Killsteal:Boolean("Q", "Killsteal with Q", true)
+
+PantheonMenu:SubMenu("Drawings", "Drawings:")
+PantheonMenu.Drawings:Boolean("Q", "Draw Q", true)
+
+
+PantheonMenu:SubMenu("DMG", "Draw DMG")
+PantheonMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
+PantheonMenu.DMG:Boolean("W", "Draw W Dmg", true)
 
 
  
- 
-myIAC = IAC()
  
 OnLoop(function(myHero)
-Drawings()
-Killsteal()
-local target = GetCurrentTarget()
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(600, DAMAGE_PHYSICAL)
+
+  
+
+
+           if  IOW:Mode() == "Combo" then
+                     local target = GetCurrentTarget()
 				
-				        if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, 600) and Config.Q then
+				        if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 600) and PantheonMenu.Combo.Q:Value() then
                         CastTargetSpell(target, _Q)
                         end
-						if CanUseSpell(myHero, _W) == READY and ValidTarget(target, 600) and Config.W then
+						if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 600) and PantheonMenu.Combo.W:Value() then
                         CastTargetSpell(target, _W)
 						end
         end
 
-        if ValidTarget(target, 2000) and Config.DMG then
-  if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
 
-    if CanUseSpell(myHero,_W) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_W) + 25 + 1.0*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
+for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+        if GoS:ValidTarget(enemy, 2000) and PantheonMenu.DMG.Q:Value() and CanUseSpell(myHero,_Q) == READY then
+local trueDMG = GoS:CalcDamage(myHero, enemy, (40*GetCastLevel(myHero,_Q) - 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
+DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    end
+    if CanUseSpell(myHero,_W) == READY and PantheonMenu.DMG.W:Value() then
+local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (25*GetCastLevel(myHero,_W) + 25 + 1.0*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
     end
 
  end
- 
+      for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
-end)
- 
- function Killsteal()
-	for i,enemy in pairs(GetEnemyHeroes()) do
-                 if CanUseSpell(myHero,_Q) and ValidTarget(enemy, 600) and KSConfig.KSQ and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
+        
+                 if CanUseSpell(myHero,_Q) and GoS:ValidTarget(enemy, 600) and PantheonMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0) then
                  CastTargetSpell(enemy, _Q)
             end
       end
-end
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-end
+
+if PantheonMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xff00ff00) end
+
+end)
