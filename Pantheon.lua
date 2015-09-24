@@ -48,7 +48,7 @@ local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (25*GetCastLevel(myHero,_W) + 2
       for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
         
-                 if CanUseSpell(myHero,_Q) and GoS:ValidTarget(enemy, 600) and PantheonMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, (40*GetCastLevel(myHero,_Q) + 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0) then
+                 if CanUseSpell(myHero,_Q) and GoS:ValidTarget(enemy, 600) and PantheonMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, (40*GetCastLevel(myHero,_Q) - 25 + 1.4*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0) then
                  CastTargetSpell(enemy, _Q)
             end
       end
