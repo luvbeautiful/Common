@@ -1,48 +1,50 @@
-Config = scriptConfig("Zed", "Zed:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
- 
-myIAC = IAC()
+ZedMenu = Menu("Zed", "Zed")
+ZedMenu:SubMenu("Combo", "Combo")
+ZedMenu.Combo:Boolean("Q", "Use Q", true)
+ZedMenu.Combo:Boolean("W", "Use W", true)
+ZedMenu.Combo:Boolean("E", "Use E", true)
+ZedMenu.Combo:Boolean("R", "Use R", true)
+
+ZedMenu:SubMenu("Drawings", "Drawings")
+ZedMenu.Drawings:Boolean("Q", "Draw Q Range", true)
+ZedMenu.Drawings:Boolean("W", "Draw W Range", true)
+ZedMenu.Drawings:Boolean("E", "Draw E Range", true)
+ZedMenu.Drawings:Boolean("R", "Draw R Range", true)
  
 OnLoop(function(myHero)
-Drawings()
  
-        if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_PHYSICAL)
-                if ValidTarget(target, 1000) then
+        if IOW:Mode() == "Combo" then
+
+                        local target = GetCurrentTarget()
                        
+                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),550,300,1500,290,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1700,350,925,50,false,false)
+
+
+
+
+
+
                        
-                        local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),550,300,GetCastRange(myHero,_W),290,false,false)
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                        if CanUseSpell(myHero, _W) and GetCastName(myHero, _W) ~= "zedw2" and WPred.HitChance == 1 and GoS:ValidTarget(target, 1500) and ZedMenu.Combo.W:Value() then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
-                        end
-						local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1700,300,925,50,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+                    end
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and ZedMenu.Combo.W:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and IsInDistance(target, 290) and Config.E then
+						if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and ZedMenu.Combo.E:Value() then
                         CastSpell(_E)
 						end
-						if CanUseSpell(myHero, _R) == READY and ValidTarget(target, GetCastRange(myHero,_R)) and IsInDistance(target, 625) and Config.R then
+						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.3 and ZedMenu.Combo.R:Value() then
 						CastTargetSpell(target, _R) 
 						end
-                end
-        end
-end)
- 
 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff000) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff000) end
-end
+	end					
+
+if ZedMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
+if ZedMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1500,3,100,0xff00ff00) end
+if ZedMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xff00ff00) end
+if ZedMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
+
+
+    end)

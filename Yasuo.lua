@@ -29,7 +29,7 @@ OnLoop(function(myHero)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq2w" and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and  GoS:ValidTarget(target, 520) and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,250,1100,55,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,350,1100,55,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and GotBuff(myHero, "yasuodashcalar") == 0 and QPred.HitChance == 1 and GoS:ValidTarget(target, 3250) and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end

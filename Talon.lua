@@ -1,3 +1,22 @@
+MorganaMenu = Menu("Talon", "Talon")
+MorganaMenu:SubMenu("Combo", "Combo")
+MorganaMenu.Combo:Boolean("Q", "Use Q", true)
+MorganaMenu.Combo:Boolean("W", "Use W", false)
+MorganaMenu.Combo:Boolean("E", "Use E", true)
+MorganaMenu.Combo:Boolean("R", "Use R", true)
+
+MorganaMenu:SubMenu("Drawings", "Drawings:")
+MorganaMenu.Drawings:Boolean("W", "Draw W", true)
+MorganaMenu.Drawings:Boolean("E", "Draw E", true)
+
+
+MorganaMenu:SubMenu("DMG", "Draw DMG")
+MorganaMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
+MorganaMenu.DMG:Boolean("W", "Draw W Dmg", true)
+MorganaMenu.DMG:Boolean("R", "Draw R Dmg", true)
+
+
+
 Config = scriptConfig("Talon", "Talon:")
 Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
 Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
@@ -36,16 +55,11 @@ local target = GetCurrentTarget()
 						end
         end
 
-        if ValidTarget(target, 2000) and Config.DMG then
-    if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (30*GetCastLevel(myHero,_Q) + 0.3*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
- if CanUseSpell(myHero,_W) == READY then
+
+ if CanUseSpell(myHero,_W) == READY and ValidTarget(target, 2000) and Config.DMG then
 local trueDMG = CalcDamage(myHero, target, 0, (25*GetCastLevel(myHero,_W) + 5 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
-     if CanUseSpell(myHero,_R) == READY then
+     elseif CanUseSpell(myHero,_R) == READY then
 local trueDMG = CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_R) + 70 + 0.75*(GetBaseDamage(myHero) + GetBonusDmg(myHero))))
     DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
     end

@@ -24,7 +24,7 @@ if IOW:Mode() == "Combo" then
 			  local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,250,1200,60,true,false)
              local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1600,250,1050,80,false,false)          
 			local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,100,475,750,false,true)		    
-            local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),20000,1000,2000,160,false,false)
+            local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2000,1000,20000,160,false,false)
 
 
 
@@ -48,7 +48,7 @@ if IOW:Mode() == "Combo" then
 
 	      for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
-            local RPred = GetPredictionForPlayer(Gos:myHeroPos(),enemy,GetMoveSpeed(enemy),2000,1000,2000,160,false,false)
+            local RPred = GetPredictionForPlayer(Gos:myHeroPos(),enemy,GetMoveSpeed(enemy),2000,1000,20000,160,false,false)
 		       
                if CanUseSpell(myHero, _R) and RPred.HitChance == 1 and GoS:ValidTarget(enemy, GetCastRange(myHero, _R)) and EzrealMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 100 + 1.0*(GetBaseDamage(myHero) + GetBonusDmg(myHero) + 0.90*(GetBonusAP(myHero)))),0) and GoS:GetDistance(myHero, enemy) < 5000 then  
                CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)

@@ -48,12 +48,12 @@ local target = GetCurrentTarget()
 					           	end
                       for _, ally in pairs(GoS:GetAllyHeroes()) do
                         local WPred = GetPredictionForPlayer(GoS:myHeroPos(),ally,GetMoveSpeed(ally),1600,250,1050,80,false,false)
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, ally) <= 1000 and LuxMenu.Combo.AW:Value() then
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and GoS:GetDistance(myHero, ally) <= 1050 and LuxMenu.Combo.AW:Value() then
                            CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                          end
                        end
                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),myHero,GetMoveSpeed(myHero),1600,250,1050,80,false,false)
-                      if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, myHero) <= 1000 and LuxMenu.Combo.MW:Value() then
+                      if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.5 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and LuxMenu.Combo.MW:Value() then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                      end
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and LuxMenu.Combo.E:Value() then

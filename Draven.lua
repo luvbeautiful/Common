@@ -17,9 +17,15 @@ DravenMenu.Drawings:Boolean("W","Draw W", true)
  
 OnLoop(function(myHero)
 
+
 local target = GetCurrentTarget()
 
+
+
 if IOW:Mode() == "Combo" then
+
+
+
                        local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1400,300,1100,1300,false,false)
 
                        

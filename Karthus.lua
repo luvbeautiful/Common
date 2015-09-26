@@ -20,7 +20,7 @@ local target = GetCurrentTarget()
 
 if IOW:Mode() == "Combo" then
                        
-					                 local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,900,875,190,false,false)
+					                 local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,900,875,160,false,false)
 
              
 
@@ -39,7 +39,7 @@ if IOW:Mode() == "Combo" then
 
  for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 
-                 if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and KarthusMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 100 + 0.6*GetBonusAP(myHero))) then
+                 if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) and KarthusMenu.Killsteal.R:Value() and GoS:GetDistance(myHero, enemy) >= 1200 and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (150*GetCastLevel(myHero,_R) + 100 + 0.6*GetBonusAP(myHero))) then
                  CastSpell(_R)
             end
       end

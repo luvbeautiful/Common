@@ -42,7 +42,7 @@ OnLoop(function(myHero)
                         CastTargetSpell(target, _E)
                         end
                         for _, ally in pairs(GoS:GetAllyHeroes()) do
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, ally) <= 650 and (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and LuluMenu.Combo.AE:Value() then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 1000) and (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and LuluMenu.Combo.AE:Value() then
                         CastTargetSpell(ally, _E)
                         end
                     end
@@ -50,7 +50,7 @@ OnLoop(function(myHero)
                         CastTargetSpell(myHero, _E)   
 						end
                         for _, ally in pairs(GoS:GetAllyHeroes()) do
-                        if LuluMenu.Combo.AR:Value() and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, ally) <= 900 and (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and CanUseSpell(myHero, _R) == READY then
+                        if LuluMenu.Combo.AR:Value() and GoS:ValidTarget(target, 1000) and (GetCurrentHP(ally)/GetMaxHP(ally))<0.3 and CanUseSpell(myHero, _R) == READY then
                         CastTargetSpell(ally, _R)
                         end
                     end

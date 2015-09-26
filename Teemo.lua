@@ -26,7 +26,7 @@ if IOW:Mode() == "Combo" then
 
           for i,enemy in pairs(GoS:GetEnemyHeroes()) do
                if CanUseSpell(myHero, _Q) and GoS:ValidTarget(enemy, GetCastRange(myHero, _Q)) and TeemoMenu.Killsteal.Q:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.8*(GetBonusAP(myHero)))) then
-               CastTargetSpell(target, _Q)
+               CastTargetSpell(enemy, _Q)
                end
         end
 
