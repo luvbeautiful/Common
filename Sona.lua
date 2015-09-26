@@ -1,47 +1,87 @@
-Config = scriptConfig("Sona", "Sona:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
+SonaMenu = Menu("Sona", "Sona")
+SonaMenu:SubMenu("Combo", "Combo")
 
- 
-myIAC = IAC()
- 
+SonaMenu.Combo:Boolean("Q", "Use Q", true)
+SonaMenu.Combo:Boolean("AW", "Use Ally W", true)
+SonaMenu.Combo:Boolean("SW", "Use Self W", true)
+SonaMenu.Combo:Boolean("E", "Use E", true)
+SonaMenu.Combo:Boolean("R", "Use R", false)
+
+SonaMenu:SubMenu("Killsteal", "Killsteal")
+SonaMenu.Killsteal:Boolean("R", "Killsteal with R", true)
+
+SonaMenu:SubMenu("Drawings", "Drawings:")
+SonaMenu.Drawings:Boolean("Q", "Draw Q", true)
+SonaMenu.Drawings:Boolean("W", "Draw W", false)
+SonaMenu.Drawings:Boolean("E", "Draw E", false)
+SonaMenu.Drawings:Boolean("R", "Draw R", false)
+
+
+SonaMenu:SubMenu("DMG", "Draw DMG")
+SonaMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
+SonaMenu.DMG:Boolean("R", "Draw R Dmg", true)
+
 OnLoop(function(myHero)
-Drawings()
 
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(1150, DAMAGE_MAGIC)
-                if ValidTarget(target, 1150) then
+
+local target = GetCurrentTarget()
+
+
+
+if IOW:Mode() == "Combo" then
+                        local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2400,250,900,140,false,false)
+
+
                        
-					    if CanUseSpell(myHero, _Q) == READY and ValidTarget(target, GetCastRange(myHero,_Q)) and Config.Q then
+					    if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 850) and SonaMenu.Combo.Q:Value() then
                         CastSpell(_Q)
 						end
-                        if CanUseSpell(myHero, _W) == READY and ValidTarget(target, GetCastRange(myHero,_W)) and Config.W then
+                        for _, ally in pairs(GoS:GetAllyHeroes()) do  
+                        if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, ally) <= 1000 and (GetCurrentHP(ally)/GetMaxHP(ally))<0.5 and SonaMenu.Combo.AW:Value() then 
                         CastSpell(_W)
 						end
-						if CanUseSpell(myHero, _E) == READY and ValidTarget(target, GetCastRange(myHero,_E)) and Config.E then
+                        end
+                        if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 1000) and (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.4 and SonaMenu.Combo.SW:Value() then
+                        CastSpell(_W)
+                        end
+						if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero,ally) <= 360 and SonaMenu.Combo.E:Value() then
                         CastSpell(_E)
 						end
-						local RPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),2400,300,1000,150,false,false)
-                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and ValidTarget(target, GetCastRange(myHero,_R)) and Config.R then
+                        if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and GoS:ValidTarget(target, 900) and SonaMenu.Combo.R:Value() then
                         CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
 						end
-                end
         end
+
+for _, enemy in pairs (GoS:GetEnemyHeroes()) do 
+        
+        if GoS:ValidTarget(enemy, 2000) and CanUseSpell(myHero,_Q) == READY and SonaMenu.DMG.Q:Value() then
+local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 0.5*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffffff) 
+    elseif CanUseSpell(myHero,_R) == READY and SonaMenu.DMG.R:Value() then 
+local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) - 50 + 0.5*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffffff)
+    end
+    
+end
+
+
+
+
+for _, enemy in pairs (GoS:GetEnemyHeroes()) do
+
+            local RPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),2400,250,900,140,false,false)
+
+            if CanUseSpell(myHero, _R) == READY and RPred.HitChance == 1 and GoS:ValidTarget(enemy, 900) and SonaMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) - 50 + 0.5*(GetBonusAP(myHero)))) then
+            CastSkillShot(_R,RPred.PredPos.x,RPred.PredPos.y,RPred.PredPos.z)
+            end
+        end
+ 
+ 
+
+if SonaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,850,3,100,0xff00ffff) end
+if SonaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,360,3,100,0xff00ffff) end
+if SonaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xff00ffff) end
+if SonaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,3,100,0xff00ffff) end
+
 end)
 
- 
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ff00) end
-end
