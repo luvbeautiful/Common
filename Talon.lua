@@ -51,10 +51,10 @@ OnLoop(function(myHero)
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
  if CanUseSpell(myHero,_W) == READY and GoS:ValidTarget(enemy, 2000) and TalonMenu.DMG.W:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (25*GetCastLevel(myHero,_W) + 5 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
      elseif CanUseSpell(myHero,_R) == READY and TalonMenu.DMG.R:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (50*GetCastLevel(myHero,_R) + 70 + 0.75*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
     end
 
  end
