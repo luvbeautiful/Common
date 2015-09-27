@@ -56,10 +56,10 @@ for _, enemy in pairs (GoS:GetEnemyHeroes()) do
         
         if GoS:ValidTarget(enemy, 2000) and CanUseSpell(myHero,_Q) == READY and SonaMenu.DMG.Q:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 0.5*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffffff) 
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00) 
     elseif CanUseSpell(myHero,_R) == READY and SonaMenu.DMG.R:Value() then 
 local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) - 50 + 0.5*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffffff)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
     
 end
@@ -78,10 +78,10 @@ for _, enemy in pairs (GoS:GetEnemyHeroes()) do
  
  
 
-if SonaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,850,3,100,0xff00ffff) end
-if SonaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,360,3,100,0xff00ffff) end
-if SonaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xff00ffff) end
-if SonaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,3,100,0xff00ffff) end
+if SonaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,850,3,100,0xffffff00) end
+if SonaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,360,3,100,0xffffff00) end
+if SonaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xffffff00) end
+if SonaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,3,100,0xffffff00) end
 
 end)
 

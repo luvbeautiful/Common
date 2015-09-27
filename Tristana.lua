@@ -45,10 +45,10 @@ OnLoop(function(myHero)
                 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
  if CanUseSpell(myHero,_W) == READY and GoS:ValidTarget(enemy, 2000) and TristanaMenu.DMG.W:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (25*GetCastLevel(myHero,_W) + 55 + 0.5*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
      elseif CanUseSpell(myHero,_R) == READY and GoS:ValidTarget(enemy, 2000) and TristanaMenu.DMG.R:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (100*GetCastLevel(myHero,_R) + 200 + 1.0*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
 end
 
@@ -62,7 +62,7 @@ local WPred = GetPredictionForPlayer(Gos:myHeroPos(),enemy,GetMoveSpeed(enemy),1
       end
 end
  
-if TristanaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xff00ff00) end
-if TristanaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,700,3,100,0xff00ff00) end
+if TristanaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xffffff00) end
+if TristanaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,700,3,100,0xffffff00) end
 
 end)

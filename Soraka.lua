@@ -51,7 +51,7 @@ OnLoop(function(myHero)
 end
 
  
-if SorakaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1300,3,100,0xff00ffff) end
-if SorakaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,925,3,100,0xff00ffff) end
+if SorakaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1300,3,100,0xffffff00) end
+if SorakaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,925,3,100,0xffffff00) end
 
 end)

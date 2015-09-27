@@ -51,18 +51,18 @@ OnLoop(function(myHero)
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
  if CanUseSpell(myHero,_W) == READY and GoS:ValidTarget(enemy, 2000) and TalonMenu.DMG.W:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (25*GetCastLevel(myHero,_W) + 5 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
      elseif CanUseSpell(myHero,_R) == READY and TalonMenu.DMG.R:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (50*GetCastLevel(myHero,_R) + 70 + 0.75*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff00ffff)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
 
  end
  
 
  
-if TalonMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xff00ff00) end
-if TalonMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xff00ff00) end
-if TalonMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,650,3,100,0xff00ff00) end
+if TalonMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xffffff00) end
+if TalonMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xffffff00) end
+if TalonMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,650,3,100,0xffffff00) end
 
 end)

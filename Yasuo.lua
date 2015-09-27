@@ -1,8 +1,8 @@
 YasuoMenu = Menu("Yasuo", "Yasuo")
 YasuoMenu:SubMenu("Combo", "Combo")
 YasuoMenu.Combo:Boolean("Q", "Use Q", true)
-YasuoMenu.Combo:Boolean("E", "Use E", true)
-YasuoMenu.Combo:Boolean("R", "Use R", true)
+YasuoMenu.Combo:Boolean("E", "Use E", false)
+YasuoMenu.Combo:Boolean("R", "Use R", false)
 
 YasuoMenu:SubMenu("Killsteal", "Killsteal")
 YasuoMenu.Killsteal:Boolean("Q", "Killsteal with Q", true)
@@ -10,8 +10,8 @@ YasuoMenu.Killsteal:Boolean("R", "Killsteal with R", true)
 
 YasuoMenu:SubMenu("Drawings", "Drawings")
 YasuoMenu.Drawings:Boolean("Q", "Draw Q Range", true)
-YasuoMenu.Drawings:Boolean("E", "Draw E Range", true)
-YasuoMenu.Drawings:Boolean("R", "Draw R Range", true)
+YasuoMenu.Drawings:Boolean("E", "Draw E Range", false)
+YasuoMenu.Drawings:Boolean("R", "Draw R Range", false)
  
 OnLoop(function(myHero)
  
@@ -21,15 +21,15 @@ OnLoop(function(myHero)
                          
                         
 
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),8700,350,520,15,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),8700,250,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "YasuoQW" and GotBuff(myHero, "yasuodashcalar") == 0 and  QPred.HitChance == 1 and GoS:ValidTarget(target, 520) and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),8700,350,520,15,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),8700,250,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq2w" and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and  GoS:ValidTarget(target, 520) and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,350,1100,55,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,250,1100,55,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and GotBuff(myHero, "yasuodashcalar") == 0 and QPred.HitChance == 1 and GoS:ValidTarget(target, 3250) and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
@@ -55,9 +55,9 @@ local QPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),1
                  CastSpell(_R)
     end
  
-if YasuoMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
-if YasuoMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xff00ff00) end
-if YasuoMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
+if YasuoMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xffffff00) end
+if YasuoMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xffffff00) end
+if YasuoMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xffffff00) end
 
 
 end

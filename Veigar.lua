@@ -1,75 +1,79 @@
-Config = scriptConfig("Veigar", "Veigar:")
-Config.addParam("Q", "Use Q", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("W", "Use W", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("E", "Use E", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("R", "Use R", SCRIPT_PARAM_ONOFF, true)
-KSConfig = scriptConfig("KS", "Killsteal:")
-KSConfig.addParam("KSR", "Killsteal with R", SCRIPT_PARAM_ONOFF, false)
-DrawingsConfig = scriptConfig("Drawings", "Drawings:")
-DrawingsConfig.addParam("DrawQ","Draw Q", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawW","Draw W", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawE","Draw E", SCRIPT_PARAM_ONOFF, true)
-DrawingsConfig.addParam("DrawR","Draw R", SCRIPT_PARAM_ONOFF, true)
-Config.addParam("DMG", "DMG", SCRIPT_PARAM_ONOFF, true)
+VeigarMenu = Menu("Veigar", "Veigar")
+VeigarMenu:SubMenu("Combo", "Combo")
+VeigarMenu.Combo:Boolean("Q", "Use Q", true)
+VeigarMenu.Combo:Boolean("SW", "Use W When Stunned", false)
+VeigarMenu.Combo:Boolean("W", "Use W ", false)
+VeigarMenu.Combo:Boolean("E", "Use E", true)
+
+VeigarMenu:SubMenu("Killsteal", "Killsteal")
+VeigarMenu.Killsteal:Boolean("R", "Killsteal with R", true)
+
+VeigarMenu:SubMenu("Drawings", "Drawings:")
+VeigarMenu.Drawings:Boolean("Q", "Draw Q", true)
+VeigarMenu.Drawings:Boolean("W", "Draw W", false)
+VeigarMenu.Drawings:Boolean("E", "Draw E", false)
+VeigarMenu.Drawings:Boolean("R", "Draw R", false)
+
+
+VeigarMenu:SubMenu("DMG", "Draw DMG")
+VeigarMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
+VeigarMenu.DMG:Boolean("W", "Draw W Dmg", true)
+VeigarMenu.DMG:Boolean("R", "Draw R Dmg", true)
+
 
  
- 
-myIAC = IAC()
- 
+
 OnLoop(function(myHero)
-Drawings()
-Killsteal()
-local target = GetCurrentTarget()
 
- 
-        if IWalkConfig.Combo then
-              local target = GetTarget(1000, DAMAGE_MAGIC)
+  
+
+
+           if  IOW:Mode() == "Combo" then
+                     local target = GetCurrentTarget()
+                                    local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,251,925,70,true,false)
+                                    local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,1350,900,225,false,false)
+                                    local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,250,700,390,false,false)
 				
-				        local QPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),1750,250,950,70,true,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and ValidTarget(target, 950) and Config.Q then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-						end
-						local WPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,1350,900,225,false,false)
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and ValidTarget(target, 900) and Config.W then
+					        	    end
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.SW:Value() and GotBuff(target, "DarkBindingMissile") == 1 or GotBuff(target, "Stun") == 1 or GotBuff(target, "veigareventhorizonstun") == 1 then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
-						end
-						local EPred = GetPredictionForPlayer(GetMyHeroPos(),target,GetMoveSpeed(target),0,500,700,425,false,false)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and ValidTarget(target, 700) and Config.E then
+						            end
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.W:Value() then
+                        CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
+                        end
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 700 and VeigarMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						           end
         end
 
-        if ValidTarget(target, 2000) and Config.DMG then
-    if CanUseSpell(myHero,_Q) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (45*GetCastLevel(myHero,_Q) + 40 + 0.6*(GetBonusAP(myHero))))
+   for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+    if CanUseSpell(myHero,_Q) == READY and GOS:ValidTarget(enemy, 2000) and VeigarMenu.DMG.Q:Value() then
+    local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_Q) + 35 + 0.6*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
+
+    elseif CanUseSpell(myHero,_W) == READY and GOS:ValidTarget(enemy, 2000) and VeigarMenu.DMG.W:Value() then 
+    local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (50*GetCastLevel(myHero,_W) + 70 + 1.0*(GetBonusAP(myHero))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
+
+    elseif CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and VeigarMenu.DMG.R:Value() then 
+    local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 125 + 0.7*(GetBonusAP(myHero) + 0.8*(GetBonusAP(enemy)))))
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
-    if CanUseSpell(myHero,_W) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (50*GetCastLevel(myHero,_W) + 70 + 1.0*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-  end
-    if CanUseSpell(myHero,_R) == READY then
-local trueDMG = CalcDamage(myHero, target, 0, (125*GetCastLevel(myHero,_R) + 125 + 1.0*(GetBonusAP(myHero) + (GetBonusAP(enemy)))))
-    DrawDmgOverHpBar(target,GetCurrentHP(target),trueDMG,0,0xff0cff00)
-    end
+    
+end
 
- end
- 
-
-end)
-
- 
-function Killsteal()
-                 for i,enemy in pairs(GetEnemyHeroes()) do
-                  if CanUseSpell(myHero,_R) and ValidTarget(enemy, GetCastRange(myHero,_R)) and KSConfig.KSR and GetCurrentHP(enemy) < CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 100 + 0.99*GetBonusAP(myHero))) then
+                 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+                  if CanUseSpell(myHero,_R) and GoS:ValidTarget(enemy, 650) and VeigarMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 100 + 0.7*(GetBonusAP(myHero) + 0.8*(GetBonusAP(enemy))))) then
                  CastTargetSpell(enemy, _R)
             end
       end
-end
  
-function Drawings()
-myHeroPos = GetOrigin(myHero)
-if CanUseSpell(myHero, _Q) == READY and DrawingsConfig.DrawQ then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_Q),3,100,0xff00ff00) end
-if CanUseSpell(myHero, _W) == READY and DrawingsConfig.DrawW then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_W),3,100,0xff00ff000) end
-if CanUseSpell(myHero, _E) == READY and DrawingsConfig.DrawE then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_E),3,100,0xff00fc00) end
-if CanUseSpell(myHero, _R) == READY and DrawingsConfig.DrawR then DrawCircle(myHeroPos.x,myHeroPos.y,myHeroPos.z,GetCastRange(myHero,_R),3,100,0xff00ffc0) end
-end
+
+if VeigarMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,925,3,100,0xffffff00) end
+if VeigarMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,700,3,100,0xffffff00) end
+if VeigarMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,650,3,100,0xffffff00) end
+if VeigarMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xffffff00) end
+
+end)

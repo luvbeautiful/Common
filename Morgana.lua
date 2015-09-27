@@ -68,15 +68,15 @@ OnLoop(function(myHero)
         
     if CanUseSpell(myHero,_Q) == READY and GOS:ValidTarget(enemy, 2000) and MorganaMenu.DMG.Q:Value() then
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (55*GetCastLevel(myHero,_Q) + 25 + 0.9*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
     if CanUseSpell(myHero,_W) == READY and GOS:ValidTarget(enemy, 2000) and MorganaMenu.DMG.W:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (80*GetCastLevel(myHero,_W) + 1.1*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
     if CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and MorganaMenu.DMG.R:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (75*GetCastLevel(myHero,_R) + 75 + 0.7*(GetBonusAP(myHero))))
-    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xff0cff00)
+    DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
     
 end
@@ -93,9 +93,9 @@ end
             end
         end
  
-if MorganaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1300,3,100,0xff00ffff) end
-if MorganaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,750,3,100,0xff00ff00) end
-if MorganaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,625,3,100,0xff00ff00) end
-if MorganaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xff00ff00) end
+if MorganaMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1300,3,100,0xffffff00) end
+if MorganaMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,750,3,100,0xffffff00) end
+if MorganaMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,625,3,100,0xffffff00) end
+if MorganaMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,900,3,100,0xffffff00) end
 
 end)
