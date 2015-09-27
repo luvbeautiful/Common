@@ -1,12 +1,13 @@
 VeigarMenu = Menu("Veigar", "Veigar")
 VeigarMenu:SubMenu("Combo", "Combo")
 VeigarMenu.Combo:Boolean("Q", "Use Q", true)
-VeigarMenu.Combo:Boolean("SW", "Use W When Stunned", false)
+VeigarMenu.Combo:Boolean("SW", "Use W When Stunned", true)
 VeigarMenu.Combo:Boolean("W", "Use W ", false)
 VeigarMenu.Combo:Boolean("E", "Use E", true)
 
 VeigarMenu:SubMenu("Killsteal", "Killsteal")
 VeigarMenu.Killsteal:Boolean("R", "Killsteal with R", true)
+VeigarMenu.Killsteal:Boolean("W", "Killsteal with W", true)
 
 VeigarMenu:SubMenu("Drawings", "Drawings:")
 VeigarMenu.Drawings:Boolean("Q", "Draw Q", true)
@@ -65,9 +66,13 @@ OnLoop(function(myHero)
 end
 
                  for i,enemy in pairs(GoS:GetEnemyHeroes()) do
+                  local WPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),0,1350,900,225,false,false)
                   if CanUseSpell(myHero,_R) and GoS:ValidTarget(enemy, 650) and VeigarMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 100 + 0.7*(GetBonusAP(myHero) + 0.8*(GetBonusAP(enemy))))) then
                  CastTargetSpell(enemy, _R)
             end
+             if CanUseSpell(myHero,_W) and GoS:ValidTarget(enemy, 900) and VeigarMenu.Killsteal.W:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (50*GetCastLevel(myHero,_W) + 70 + 1.0*(GetBonusAP(myHero)))) then
+                 CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
+               end
       end
  
 
