@@ -2,7 +2,7 @@ VladimirMenu = Menu("Vladimir", "Vladimir")
 VladimirMenu:SubMenu("Combo", "Combo")
 VladimirMenu.Combo:Boolean("Q", "Use Q", true)
 VladimirMenu.Combo:Boolean("E", "Use E", true)
-VladimirMenu.Combo:Boolean("R", "Use R on 3 or your hp below 40%", true)
+VladimirMenu.Combo:Boolean("R", "Use R on 3 or HP<40%", true)
 
 VladimirMenu:SubMenu("Killsteal", "Killsteal")
 VladimirMenu.Killsteal:Boolean("R", "Killsteal with R", true)
