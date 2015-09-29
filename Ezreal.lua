@@ -2,17 +2,17 @@ EzrealMenu = Menu("Ezrael", "Ezrael")
 EzrealMenu:SubMenu("Combo", "Combo")
 EzrealMenu.Combo:Boolean("Q", "Use Q", true)
 EzrealMenu.Combo:Boolean("W", "Use W", true)
-EzrealMenu.Combo:Boolean("E", "Use E", true)
-EzrealMenu.Combo:Boolean("R", "Use R", true)
+EzrealMenu.Combo:Boolean("E", "Use E", false)
+EzrealMenu.Combo:Boolean("R", "Use R", false)
 
 EzrealMenu:SubMenu("Killsteal", "Killsteal:")
 EzrealMenu.Killsteal:Boolean("R", "Killsteal with R", true)
 
 
 EzrealMenu:SubMenu("Drawings", "Drawings:")
-EzrealMenu.Drawings:Boolean("E","Draw E", true)
-EzrealMenu.Drawings:Boolean("W","Draw W", true)
-EzrealMenu.Drawings:Boolean("R","Draw R", true)
+EzrealMenu.Drawings:Boolean("E","Draw E", false)
+EzrealMenu.Drawings:Boolean("W","Draw W", false)
+EzrealMenu.Drawings:Boolean("R","Draw R", false)
 EzrealMenu.Drawings:Boolean("Q","Draw Q", true)
  
 OnLoop(function(myHero)
