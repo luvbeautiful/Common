@@ -19,7 +19,7 @@ OnLoop(function(myHero)
  
         if IOW:Mode() == "Combo" then
                         local target = GetCurrentTarget()
-				local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,250,700,400,false,true)
+				local WPred = GetPredictionForPlayer(GoS:myHeroPos(),myHero,GetMoveSpeed(myHero),0,250,700,400,false,true)
 
                         if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_Q)) and AkaliMenu.Combo.Q:Value() then
                         CastTargetSpell(target, _Q)
