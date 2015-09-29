@@ -33,7 +33,7 @@ OnLoop(function(myHero)
 		                end
 		                for i,enemy in pairs(GoS:GetEnemyHeroes()) do
 		                local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,250,925,250,false,true)
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and  GoS:EnemiesAround(EPred.PredPos, 250) >= 2 or (GetCurrentHP(myHero)/GetMaxHP(myHero))<=0.30 GoS:ValidTarget(target, 925) and SorakaMenu.Combo.E:Value() then
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and  GoS:EnemiesAround(EPred.PredPos, 250) >= 2 or (GetCurrentHP(myHero)/GetMaxHP(myHero))<=0.30 and GoS:ValidTarget(target, 925) and SorakaMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
 						end
 					end
