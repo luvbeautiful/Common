@@ -36,7 +36,7 @@ OnLoop(function(myHero)
                         CastSpell(_Q)
 						end
 						end
-                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and and GoS:GetDistance(myHero, target) >= 600 and JinxMenu.Combo.W:Value() then
+                        if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_W)) and GoS:GetDistance(myHero, target) >= 600 and JinxMenu.Combo.W:Value() then
                         CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                         end
                         if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, GetCastRange(myHero,_E)) and JinxMenu.Combo.E:Value() then
