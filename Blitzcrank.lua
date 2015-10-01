@@ -1,13 +1,13 @@
 BlitzcrankMenu = Menu("Blitzcrank", "Blitzcrank")
 BlitzcrankMenu:SubMenu("Combo", "Combo")
 BlitzcrankMenu.Combo:Boolean("Q", "Use Q", true)
-BlitzcrankMenu.Combo:Boolean("W", "Use W", true)
-BlitzcrankMenu.Combo:Boolean("E", "Use E", true)
-BlitzcrankMenu.Combo:Boolean("R", "Use R", true)
+BlitzcrankMenu.Combo:Boolean("W", "Use W", false)
+BlitzcrankMenu.Combo:Boolean("E", "Use E", false)
+BlitzcrankMenu.Combo:Boolean("R", "Use R", false)
 
 BlitzcrankMenu:SubMenu("Drawings", "Drawings")
 BlitzcrankMenu.Drawings:Boolean("Q", "Draw Q Range", true)
-BlitzcrankMenu.Drawings:Boolean("R", "Draw R Range", true)
+BlitzcrankMenu.Drawings:Boolean("R", "Draw R Range", false)
 
 
 BlitzcrankMenu:SubMenu("Killsteal", "Killsteal")
@@ -21,7 +21,7 @@ OnLoop(function(myHero)
                         local target = GetCurrentTarget()
 				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,1050,70,true,false)
                         
-                       if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1050) and BlitzcrankMenu.Combo.Q:Value() then
+                       if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 900 and BlitzcrankMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						            end
                         if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 600) and BlitzcrankMenu.Combo.W:Value() then
