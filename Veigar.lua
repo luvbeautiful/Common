@@ -35,7 +35,7 @@ OnLoop(function(myHero)
                                     local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,1350,900,225,false,false)
                                     local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,math.huge,700,350,false,true)
 				
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and VeigarMenu.Combo.Q:Value() then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 					        	    end
                         if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.SW:Value() and GotBuff(target, "DarkBindingMissile") == 1 or GotBuff(target, "Stun") == 1 or GotBuff(target, "veigareventhorizonstun") == 1 then
