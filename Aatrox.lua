@@ -49,9 +49,14 @@ for i,enemy in pairs(GoS:GetEnemyHeroes()) do
  if CanUseSpell(myHero,_Q) == READY and GoS:ValidTarget(enemy, 2000) and AatroxMenu.DMG.Q:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, (45*GetCastLevel(myHero,_Q) - 25 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
+<<<<<<< HEAD
 
      elseif CanUseSpell(myHero,_E) == READY and AatroxMenu.DMG.E:Value() then
 local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (35*GetCastLevel(myHero,_E) + 0.6*(GetBonusAP(myHero) - 40 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero)))),0)
+=======
+     elseif CanUseSpell(myHero,_E) == READY and AatroxMenu.DMG.E:Value() then
+local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (35*GetCastLevel(myHero,_E) + 0.6*(GetBonusAP(myHero) - 40 + 0.6*(GetBaseDamage(myHero) + GetBonusDmg(myHero))),0)
+>>>>>>> origin/master
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
 
