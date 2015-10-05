@@ -33,9 +33,9 @@ OnLoop(function(myHero)
                      local target = GetCurrentTarget()
                                     local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,251,925,70,true,false)
                                     local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,1350,900,225,false,false)
-                                    local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,250,700,390,false,false)
+                                    local EPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,math.huge,700,350,false,true)
 				
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.Q:Value() then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and VeigarMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 					        	    end
                         if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 900 and VeigarMenu.Combo.SW:Value() and GotBuff(target, "DarkBindingMissile") == 1 or GotBuff(target, "Stun") == 1 or GotBuff(target, "veigareventhorizonstun") == 1 then
@@ -69,7 +69,7 @@ end
                   local WPred = GetPredictionForPlayer(GoS:myHeroPos(),enemy,GetMoveSpeed(enemy),0,1350,900,225,false,false)
                   if CanUseSpell(myHero,_R) and GoS:ValidTarget(enemy, 650) and VeigarMenu.Killsteal.R:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 100 + 0.7*(GetBonusAP(myHero) + 0.8*(GetBonusAP(enemy))))) then
                  CastTargetSpell(enemy, _R)
-            end
+               end
              if CanUseSpell(myHero,_W) and GoS:ValidTarget(enemy, 900) and VeigarMenu.Killsteal.W:Value() and GetCurrentHP(enemy) < GoS:CalcDamage(myHero, enemy, 0, (50*GetCastLevel(myHero,_W) + 70 + 1.0*(GetBonusAP(myHero)))) then
                  CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
                end
