@@ -43,10 +43,10 @@ function InspiredsOrbWalker:MakeMenu()
   self.Config:Boolean("items", "Use Items", true)
   GoS:DelayAction(function()
     if GetRange(myHero) < 450 then
-      self.Config:Boolean("sticky", "Stick to Target", true)
+      self.Config:Boolean("sticky", "Stick to Target", false)
     end
     self.rangeCircle.Attach(myHero, GetRange(myHero)+GetHitBox(myHero))
-    self.Config:Boolean("drawcircle", "Autoattack Circle", true)
+    self.Config:Boolean("drawcircle", "Autoattack Circle", false)
     self.Config:Info("space", "")
     self.Config:Info("version", "Version: v"..IOWversion)
     self.loaded = true
