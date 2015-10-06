@@ -6,8 +6,8 @@ AlistarMenu.Combo:Boolean("E", "Use E", true)
 AlistarMenu.Combo:Boolean("R", "Use R", true)
 
 AlistarMenu:SubMenu("Drawings", "Drawings")
-AlistarMenu.Drawings:Boolean("Q", "Draw Q Range", true)
-AlistarMenu.Drawings:Boolean("W", "Draw W Range", true)
+AlistarMenu.Drawings:Boolean("Q", "Draw Q Range", false)
+AlistarMenu.Drawings:Boolean("W", "Draw W Range", false)
 AlistarMenu.Drawings:Boolean("E", "Draw E Range", true)
  
 OnLoop(function(myHero)
@@ -31,15 +31,15 @@ OnLoop(function(myHero)
                         end
                         end
                         end
-                        if CanUseSpell(myHero, _R) == READY and AlistarMenu.Combo.R:Value() then
-                        if (GetCurrentHP(myHero)/GetMaxHP(myHero))<0.4 then
+                        if CanUseSpell(myHero, _R) == READY and AlistarMenu.Combo.R:Value() and (GetCurrentHP(myHero)/GetMaxHP(myHero)) <=0.4 then
                         CastSpell(_R)   
                     end
+                
                 end
-                end
-if AlistarMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xff00ff00) end
-if AlistarMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xff00ff00) end
-if AlistarMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xff00ff00) end
+
+if AlistarMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_Q)),3,100,0xffffff00) end
+if AlistarMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_W)),3,100,0xffffff00) end
+if AlistarMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_E)),3,100,0xffffff00) end
 
 
 end)

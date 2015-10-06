@@ -41,7 +41,7 @@ OnLoop(function(myHero)
 						if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, target) < 700 and AhriMenu.Combo.W:Value() then
                         CastSpell(_W)
 						end
-                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, target) <= 940 and AhriMenu.Combo.E:Value() then
+                        if CanUseSpell(myHero, _E) == READY and EPred.HitChance == 1 and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, target) <= 900 and AhriMenu.Combo.E:Value() then
                         CastSkillShot(_E,EPred.PredPos.x,EPred.PredPos.y,EPred.PredPos.z)
                         end
                         if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 1200) and GoS:GetDistance(myHero, target) <= 840 and AhriMenu.Combo.Q:Value() then
