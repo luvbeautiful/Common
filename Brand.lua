@@ -135,7 +135,7 @@ for i,enemy in pairs(GoS:GetEnemyHeroes()) do
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (35*GetCastLevel(myHero,_E) + 35 + 0.6*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
 
-    elseif CanUseSpell(myHero,_W == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.W:Value() then 
+    elseif CanUseSpell(myHero,_W) == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.W:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_W) + 30 + 0.6*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
 
