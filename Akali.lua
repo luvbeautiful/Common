@@ -16,6 +16,8 @@ AkaliMenu.Drawings:Boolean("Q", "Draw Q Range", true)
 AkaliMenu.Drawings:Boolean("W", "Draw W Range", false)
 AkaliMenu.Drawings:Boolean("E", "Draw E Range", false)
 AkaliMenu.Drawings:Boolean("R", "Draw R Range", false)
+AkaliMenu.Drawings:Boolean("Mouse", "Draw Mouse R Range", true)
+
 
 AkaliMenu:SubMenu("DMG", "Draw DMG")
 AkaliMenu.DMG:Boolean("Q", "Draw Q Dmg", true)
@@ -27,12 +29,20 @@ AkaliMenu.Killsteal:Boolean("R", "Killsteal with R", true)
 AkaliMenu.Killsteal:Boolean("E", "Killsteal with E", true)
 
 AkaliMenu:SubMenu("LaneClear", "LaneClear")
-AkaliMenu.LaneClear:Boolean("Q", "LaneClear with Q", true)
-AkaliMenu.LaneClear:Boolean("E", "LaneClear with E", true)
+AkaliMenu.LaneClear:Boolean("LQ", "LaneClear with Q", true)
+AkaliMenu.LaneClear:Boolean("LE", "LaneClear with E", true)
+
+AkaliMenu:SubMenu("JungleClear", "JungleClear")
+AkaliMenu.JungleClear:Boolean("JQ", "JungleClear with Q", true)
+AkaliMenu.JungleClear:Boolean("JE", "JungleClear with E", true)
 
 AkaliMenu:SubMenu("Lasthit", "Lasthit")
 AkaliMenu.Lasthit:Boolean("Q", "Lasthit with Q", true)
 AkaliMenu.Lasthit:Boolean("E", "Lasthit with E", true)
+
+AkaliMenu:SubMenu("Misc", "Misc")
+AkaliMenu.Misc:Key("MJR", "Jump on minion/jungle", string.byte("T"))
+
  
 OnLoop(function(myHero)
  
@@ -59,11 +69,25 @@ OnLoop(function(myHero)
         end  
 for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 if IOW:Mode() == "LaneClear" then
-        if CanUseSpell(myHero, _Q) == READY and AkaliMenu.LaneClear.Q:Value() and GoS:ValidTarget(minion, 600) then
+        if CanUseSpell(myHero, _Q) == READY and AkaliMenu.LaneClear.LQ:Value() and GoS:ValidTarget(minion, 600) then
         CastTargetSpell(minion, _Q)
         end
         
-        if CanUseSpell(myHero, _E) == READY and AkaliMenu.LaneClear.E:Value() and GoS:ValidTarget(minion, 280) then
+        if CanUseSpell(myHero, _E) == READY and AkaliMenu.LaneClear.LE:Value() and GoS:ValidTarget(minion, 280) then
+        CastSpell(_E)
+        end
+    end
+end
+
+
+
+for _,jungle in pairs(GoS:GetAllMinions(MINION_JUNGLE)) do
+if IOW:Mode() == "LaneClear" then
+        if CanUseSpell(myHero, _Q) == READY and AkaliMenu.JungleClear.JQ:Value() and GoS:ValidTarget(jungle, 600) then
+        CastTargetSpell(jungle, _Q)
+        end
+        
+        if CanUseSpell(myHero, _E) == READY and AkaliMenu.JungleClear.JE:Value() and GoS:ValidTarget(jungle, 280) then
         CastSpell(_E)
         end
     end
@@ -124,10 +148,29 @@ elseif CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(enemy, 300) and Akal
 end        
 end
 
+
+local mousePos = GetMousePos()
+for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
+for _,jungle in pairs(GoS:GetAllMinions(MINION_JUNGLE)) do
+
+                        if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(minion, 800) and GoS:GetDistance(minion ,mousePos) <= 100 and AkaliMenu.Misc.MJR:Value() then
+                        IOW:EnableOrbwalking()
+                        CastTargetSpell(minion, _R)
+                        end
+                        if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(jungle, 800) and GoS:GetDistance(jungle ,mousePos) <= 100 and AkaliMenu.Misc.MJR:Value() then
+                        IOW:EnableOrbwalking()
+                        CastTargetSpell(jungle, _R)
+                        end
+                end
+end
+
 if AkaliMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,600,3,100,0xffffff00) end
 if AkaliMenu.Drawings.W:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,700,3,100,0xffffff00) end
 if AkaliMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,325,3,100,0xffffff00) end
 if AkaliMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,715,3,100,0xffffff00) end
+if AkaliMenu.Drawings.Mouse:Value() then DrawCircle(mousePos.x, mousePos.y, mousePos.z,100,3,100,0xffffff00) end
+
+
 
  
 end)
