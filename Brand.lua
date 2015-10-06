@@ -45,7 +45,7 @@ OnLoop(function(myHero)
                        
                         local target = GetCurrentTarget()
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1200,250,1150,80,true,false)
-                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),20,850,1100,240,false,false)
+                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,850,1100,240,false,false)
 
 
 
@@ -105,7 +105,7 @@ if IOW:Mode() == "LaneClear" then
                         for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 
                         local minionPos = GetOrigin(minion)
-                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),20,850,1100,240,false,false)
+                        local WPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),0,850,1100,240,false,false)
 
                        
                         if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(minion, 1100) and BrandMenu.LaneClear.W:Value() then
@@ -117,7 +117,7 @@ end
 
 if IOW:Mode() == "Harass" then
       local target = GetCurrentTarget()
-      local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),20,850,1100,240,false,false)
+      local WPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),0,850,1100,240,false,false)
 
       if CanUseSpell(myHero, _W) == READY and WPred.HitChance == 1 and GoS:ValidTarget(target, 1300) and GoS:GetDistance(myHero, target) <= 1000 and BrandMenu.Harass.W:Value() then
      CastSkillShot(_W,WPred.PredPos.x,WPred.PredPos.y,WPred.PredPos.z)
