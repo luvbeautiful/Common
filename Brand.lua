@@ -127,19 +127,19 @@ end
 
 
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
-    if CanUseSpell(myHero,_Q) == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.Q:Value() then
+    if CanUseSpell(myHero,_Q) == READY and GOS:ValidTarget(enemy, 2000) and BrandMenu.DMG.Q:Value() then
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (40*GetCastLevel(myHero,_Q) + 40 + 0.65*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
 
-    elseif CanUseSpell(myHero,_E) == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.E:Value() then 
+    elseif CanUseSpell(myHero,_E) == READY and GOS:ValidTarget(enemy, 2000) and BrandMenu.DMG.E:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (35*GetCastLevel(myHero,_E) + 35 + 0.6*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
 
-    elseif CanUseSpell(myHero,_W) == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.W:Value() then 
+    elseif CanUseSpell(myHero,_W) == READY and GOS:ValidTarget(enemy, 2000) and BrandMenu.DMG.W:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (45*GetCastLevel(myHero,_W) + 30 + 0.6*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
 
-    elseif CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and AkaliMenu.DMG.R:Value() then 
+    elseif CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and BrandMenu.DMG.R:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (100*GetCastLevel(myHero,_R) + 50 + 0.5*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
