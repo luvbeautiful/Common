@@ -154,11 +154,9 @@ for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 for _,jungle in pairs(GoS:GetAllMinions(MINION_JUNGLE)) do
 
                         if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(minion, 800) and GoS:GetDistance(minion ,mousePos) <= 100 and AkaliMenu.Misc.MJR:Value() then
-                        IOW:EnableOrbwalking()
                         CastTargetSpell(minion, _R)
                         end
                         if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(jungle, 800) and GoS:GetDistance(jungle ,mousePos) <= 100 and AkaliMenu.Misc.MJR:Value() then
-                        IOW:EnableOrbwalking()
                         CastTargetSpell(jungle, _R)
                         end
                 end
