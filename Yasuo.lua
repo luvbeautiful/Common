@@ -122,16 +122,16 @@ local junglePos = GetOrigin(jungle)
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
         
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,271,520,15,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,271,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq2w" and GoS:ValidTarget(jungle, 520) and YasuoMenu.JungleClear.JQ:Value() then 
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
 
-                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,250,1100,55,false,false)
+                        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,250,1100,55,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and GoS:ValidTarget(jungle, 1000) and YasuoMenu.JungleClear.JQ:Value() then 
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(jungle, 475) and YasuoMenu.LaneClear.JE:Value() then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(jungle, 475) and YasuoMenu.JungleClear.JE:Value() then
                         CastTargetSpell(jungle, _E)
 
         end
