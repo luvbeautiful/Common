@@ -26,9 +26,9 @@ OnLoop(function(myHero)
         if IOW:Mode() == "Combo" then
                        
                         local target = GetCurrentTarget()
-				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,1050,70,true,false)
+				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,925,70,true,false)
                         
-                       if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 900 and BlitzcrankMenu.Combo.Q:Value() then
+                       if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 870 and BlitzcrankMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
 						            end
                         if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 600) and BlitzcrankMenu.Combo.W:Value() then
@@ -50,7 +50,7 @@ if CanUseSpell(myHero,_R) and GoS:ValidTarget(enemy, GetCastRange(myHero,_R)) an
 end
 
 local target = GetCurrentTarget()
-local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,220,925,70,true,false)
+local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,925,70,true,false)
  
                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 870 and BlitzcrankMenu.AutoQ.AQ:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
@@ -69,7 +69,7 @@ local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target)
     
 end
 
-if BlitzcrankMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1050,1,100,0xff00ff00) end
+if BlitzcrankMenu.Drawings.Q:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,870,1,100,0xff00ff00) end
 if BlitzcrankMenu.Drawings.R:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,(GetCastRange(myHero,_R)),3,100,0xff00ff00) end
 
 
