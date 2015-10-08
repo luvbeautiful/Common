@@ -26,20 +26,20 @@ OnLoop(function(myHero)
         if IOW:Mode() == "Combo" then
                        
                         local target = GetCurrentTarget()
-				local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,925,70,true,false)
+				        local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1800,250,925,70,true,false)
                         
-                       if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 870 and BlitzcrankMenu.Combo.Q:Value() then
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 2000) and GoS:GetDistance(myHero, target) <= 870 and BlitzcrankMenu.Combo.Q:Value() then
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-						            end
+						end
                         if CanUseSpell(myHero, _W) == READY and GoS:ValidTarget(target, 600) and BlitzcrankMenu.Combo.W:Value() then
                         CastSpell(_W)
                         end
-						            if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 400) and BlitzcrankMenu.Combo.E:Value() then
+						if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 400) and BlitzcrankMenu.Combo.E:Value() then
                         CastSpell(_E)
-						            end
-						            if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and BlitzcrankMenu.Combo.R:Value() then
+						end
+						if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and BlitzcrankMenu.Combo.R:Value() then
                         CastSpell(_R)
-						            end
+						end
         end
 
 for i,enemy in pairs(GoS:GetEnemyHeroes()) do
@@ -61,8 +61,8 @@ local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target)
     if CanUseSpell(myHero,_Q) == READY and GOS:ValidTarget(enemy, 2000) and BlitzcrankMenu.DMG.Q:Value() then
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (55*GetCastLevel(myHero,_Q) + 25 + 1.0*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
-
-    elseif CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and BlitzcrankMenu.DMG.R:Value() then 
+    end
+    if CanUseSpell(myHero,_R) == READY and GOS:ValidTarget(enemy, 2000) and BlitzcrankMenu.DMG.R:Value() then 
     local trueDMG = GoS:CalcDamage(myHero, enemy, 0, (125*GetCastLevel(myHero,_R) + 125 + 1.0*(GetBonusAP(myHero))))
     DrawDmgOverHpBar(enemy,GetCurrentHP(enemy),trueDMG,0,0xffffff00)
     end
