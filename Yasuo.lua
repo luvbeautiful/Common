@@ -46,7 +46,7 @@ YasuoMenu.Drawings:Boolean("Mouse", "Draw Mouse E Range", false)
 OnLoop(function(myHero)
  
         if IOW:Mode() == "Combo" then
-                       
+                       local mousePos = GetMousePos()
                         local target = GetCurrentTarget()
                          
                         
@@ -72,7 +72,7 @@ OnLoop(function(myHero)
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
 
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 475) and YasuoMenu.Combo.E:Value() then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(target, 475) and GoS:GetDistance(target ,mousePos) <= 100 and YasuoMenu.Combo.E:Value() then
                         CastTargetSpell(target, _E)
                         end
 
