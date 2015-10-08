@@ -1,7 +1,7 @@
 YasuoMenu = Menu("Yasuo", "Yasuo")
 YasuoMenu:SubMenu("Combo", "Combo")
 YasuoMenu.Combo:Boolean("Q", "Use Q", true)
-YasuoMenu.Combo:Boolean("E", "Use E", true)
+YasuoMenu.Combo:Boolean("E", "Use E", false)
 YasuoMenu.Combo:Boolean("R", "Use R", false)
 
 YasuoMenu:SubMenu("Harass", "Harass")
@@ -52,23 +52,23 @@ OnLoop(function(myHero)
                         
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1500,250,520,15,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and GoS:GetDistance(myHero, target) <= 1100 and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and GoS:ValidTarget(target, 470) and YasuoMenu.Combo.Q:Value() then 
+                        if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 470) and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and GoS:GetDistance(myHero, target) <= 450 and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-                        elseif CanUseSpell(myHero, _Q) == READY and GoS:GetDistance(myHero, target) <= 300 and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 1 and GoS:ValidTarget(target, 470) and YasuoMenu.Combo.Q:Value() then 
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 470) and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 1 and GoS:GetDistance(myHero, target) <= 300  and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1500,271,520,15,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:GetDistance(myHero, target) <= 1100 and GotBuff(myHero, "yasuodashcalar") == 0 and GoS:ValidTarget(target, 470) and YasuoMenu.Combo.Q:Value() then 
+                        if CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 470) and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and GoS:GetDistance(myHero, target) <= 450 and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-                        elseif CanUseSpell(myHero, _Q) == READY and GoS:GetDistance(myHero, target) <= 300 and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 1 and GoS:ValidTarget(target, 470) and YasuoMenu.Combo.Q:Value() then 
+                        elseif CanUseSpell(myHero, _Q) == READY and QPred.HitChance == 1 and GoS:ValidTarget(target, 470) and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 0 and GoS:GetDistance(myHero, target) <= 300 and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),target,GetMoveSpeed(target),1500,250,1100,55,false,false)
-                        if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and QPred.HitChance == 1 and GoS:GetDistance(myHero, target) <= 1100 and GoS:ValidTarget(target, 950) and YasuoMenu.Combo.Q:Value() then 
+                        if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and QPred.HitChance == 1 and GoS:ValidTarget(target, 1000) and GoS:GetDistance(myHero, target) <= 950 and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
-                        elseif CanUseSpell(myHero, _Q) == READY and GoS:GetDistance(myHero, target) <= 300 and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 1 and GoS:ValidTarget(target, 470) and YasuoMenu.Combo.Q:Value() then 
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(target, 1000) and QPred.HitChance == 1 and GotBuff(myHero, "yasuodashcalar") == 1 and GoS:GetDistance(myHero, target) <= 300 and YasuoMenu.Combo.Q:Value() then 
                         CastSkillShot(_Q,QPred.PredPos.x,QPred.PredPos.y,QPred.PredPos.z)
                         end
 
@@ -76,7 +76,7 @@ OnLoop(function(myHero)
                         CastTargetSpell(target, _E)
                         end
 
-                        if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, GetCastRange(myHero,_R)) and YasuoMenu.Combo.R:Value() then
+                        if CanUseSpell(myHero, _R) == READY and GoS:ValidTarget(target, 1300) and YasuoMenu.Combo.R:Value() then
                         CastSpell(_R)
                         end
 
@@ -92,15 +92,21 @@ if IOW:Mode() == "LaneClear" then
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,250,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 520) and YasuoMenu.LaneClear.LQ:Value() then 
                         CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, minion) <= 300 and YasuoMenu.LaneClear.LQ:Value() then 
+                        CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
                         end
         
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,271,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 520) and YasuoMenu.LaneClear.LQ:Value() then 
                         CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, minion) <= 300 and YasuoMenu.LaneClear.LQ:Value() then 
+                        CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
                         end
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,250,1100,55,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and GoS:ValidTarget(minion, 1000) and YasuoMenu.LaneClear.LQ:Value() then 
+                        CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, minion) <= 300 and YasuoMenu.LaneClear.LQ:Value() then 
                         CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
                         end
                         if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(minion, 475) and YasuoMenu.LaneClear.LE:Value() then
@@ -121,15 +127,21 @@ local junglePos = GetOrigin(jungle)
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,250,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(jungle, 520) and YasuoMenu.JungleClear.JQ:Value() then 
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(jungle, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, jungle) <= 300 and YasuoMenu.LaneClear.JQ:Value() then 
+                        CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
         
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,271,520,15,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(jungle, 520) and YasuoMenu.JungleClear.JQ:Value() then 
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(jungle, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, jungle) <= 300 and YasuoMenu.LaneClear.JQ:Value() then 
+                        CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,250,1100,55,false,false)
                         if CanUseSpell(myHero, _Q) == READY and GetCastName(myHero, _Q) == "yasuoq3w" and GoS:ValidTarget(jungle, 1000) and YasuoMenu.JungleClear.JQ:Value() then 
+                        CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
+                        elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(jungle, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, jungle) <= 300 and YasuoMenu.LaneClear.JQ:Value() then 
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
 
