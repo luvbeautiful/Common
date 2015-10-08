@@ -86,7 +86,7 @@ OnLoop(function(myHero)
 for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 
 if IOW:Mode() == "LaneClear" then
-
+local mousePos = GetMousePos()
     local minionPos = GetOrigin(minion)
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,250,520,15,false,false)
@@ -109,7 +109,7 @@ if IOW:Mode() == "LaneClear" then
                         elseif CanUseSpell(myHero, _Q) == READY and GoS:ValidTarget(minion, 1000) and GotBuff(myHero, "yasuodashcalar") == 1 and oS:GetDistance(myHero, minion) <= 300 and YasuoMenu.LaneClear.LQ:Value() then 
                         CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
                         end
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(minion, 475) and YasuoMenu.LaneClear.LE:Value() then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(minion, 475) and GoS:GetDistance(minion ,mousePos) <= 100 and YasuoMenu.LaneClear.LE:Value() then
                         CastTargetSpell(minion, _E)
 
         end
@@ -121,7 +121,7 @@ for _,jungle in pairs(GoS:GetAllMinions(MINION_JUNGLE)) do
 
 
 if IOW:Mode() == "LaneClear" then
-
+local mousePos = GetMousePos()
 local junglePos = GetOrigin(jungle)
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),jungle,GetMoveSpeed(jungle),1500,250,520,15,false,false)
@@ -145,7 +145,7 @@ local junglePos = GetOrigin(jungle)
                         CastSkillShot(_Q,junglePos.x, junglePos.y, junglePos.z)
                         end
 
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(jungle, 475) and YasuoMenu.JungleClear.JE:Value() then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(jungle, 475) and GoS:GetDistance(jungle ,mousePos) <= 100 and YasuoMenu.JungleClear.JE:Value() then
                         CastTargetSpell(jungle, _E)
 
        
@@ -160,7 +160,7 @@ end
 for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 
 if IOW:Mode() == "LastHit" then
-
+local mousePos = GetMousePos()
 local minionPos = GetOrigin(minion)
 
                         local QPred = GetPredictionForPlayer(GoS:myHeroPos(),minion,GetMoveSpeed(minion),1500,250,520,15,false,false)
@@ -178,7 +178,7 @@ local minionPos = GetOrigin(minion)
                         CastSkillShot(_Q,minionPos.x, minionPos.y, minionPos.z)
                         end
 
-                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(minion, 475) and YasuoMenu.Lasthit.E:Value() and GetCurrentHP(minion) < GoS:CalcDamage(myHero, minion, 0, (30*GetCastLevel(myHero,_E) + 40 + 0.6*(GetBonusAP(myHero)))) then
+                        if CanUseSpell(myHero, _E) == READY and GoS:ValidTarget(minion, 475) and YasuoMenu.Lasthit.E:Value() and GoS:GetDistance(minion ,mousePos) <= 100 and GetCurrentHP(minion) < GoS:CalcDamage(myHero, minion, 0, (30*GetCastLevel(myHero,_E) + 40 + 0.6*(GetBonusAP(myHero)))) then
                         CastTargetSpell(minion, _E)
 
         end
