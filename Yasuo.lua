@@ -42,6 +42,9 @@ YasuoMenu.Drawings:Boolean("EQ", "Draw EQ Range", false)
 YasuoMenu.Drawings:Boolean("E", "Draw E Range", false)
 YasuoMenu.Drawings:Boolean("R", "Draw R Range", false)
 YasuoMenu.Drawings:Boolean("Mouse", "Draw Mouse E Range", false)
+
+YasuoMenu:SubMenu("Wall", "Wall")
+YasuoMenu.Wall:Boolean("W", "Use W", true)
  
 OnLoop(function(myHero)
  
@@ -82,6 +85,97 @@ OnLoop(function(myHero)
 
 
         end
+WALL_SPELLS = { -- Yea boiz and grillz its all right here.......
+    ["Fizz"]                      = {_R},
+    ["Aatrox"]                      = {_E},
+    ["Ahri"]                      = {_Q,_W,_E,_R},
+    ["Anivia"]                      = {_Q,_E},
+    ["Annie"]                      = {_Q},
+    ["Ashe"]                      = {_W,_R},
+    ["Amumu"]                      = {_Q},
+    ["Blitzcrank"]                      = {_Q},
+    ["Brand"]                      = {_Q,_R},
+    ["Braum"]                      = {_Q,_R},
+    ["Caitlyn"]                      = {_Q,_E,_R},
+    ["Cassiopiea"]                      = {_W,_E},
+    ["Corki"]                      = {_Q,_R},
+    ["Diana"]                      = {_Q},
+    ["DrMundo"]                      = {_Q},
+    ["Draven"]                      = {_Q,_E,_R},
+    ["Elise"]                      = {_Q,_E},
+    ["Evelynn"]                      = {_Q},
+    ["Ezreal"]                      = {_Q,_W,_R},
+    ["Galio"]                      = {_Q,_E},
+    ["Gangplank"]                      = {_Q},
+    ["Gnar"]                      = {_Q},
+    ["Graves"]                      = {_Q,_R},
+    ["Heimerdinger"]                      = {_W},
+    ["Irelia"]                      = {_R},
+    ["Janna"]                      = {_Q},
+    ["Jayce"]                      = {_Q},
+    ["Jinx"]                      = {_W,_R},
+    ["Kalista"]                      = {_Q},
+    ["Karma"]                      = {_Q},
+    ["Kassidan"]                      = {_Q},
+    ["Katarina"]                      = {_R},
+    ["Leblanc"]                      = {_Q,_E},
+    ["Irelia"]                      = {_R},
+    ["Leesin"]                      = {_Q},
+    ["Irelia"]                      = {_R},
+   	["Leona"]                      = {_E},
+   	["Lissandra"]                      = {_E},
+   	["Lucian"]                      = {_R}, 
+   	["Lux"]                      = {_Q,_E},
+   	["Missfortune"]                      = {_R},
+   	["Morgana"]                      = {_Q},
+   	["Nami"]                      = {_R},
+   	["Nocturne"]                      = {_Q},
+   	["Pantheon"]                      = {_Q},
+   	["Quinn"]                      = {_Q},
+   	["Rengar"]                      = {_E},
+   	["Riven"]                      = {_R},
+   	["Ryze"]                      = {_Q,_E},
+   	["Sejuani"]                      = {_R},
+   	["Sivir"]                      = {_Q,_E},
+   	["Skarner"]                      = {_E},
+   	["Sona"]                      = {_R},
+   	["Swain"]                      = {_Q,_R},
+   	["Irelia"]                      = {_R},
+   	["Syndra"]                      = {_E,_R},
+   	["Talon"]                      = {_W,_R},
+   	["Teemo"]                      = {_Q},
+   	["Thresh"]                      = {_Q},
+   	["Tristana"]                      = {_R},
+   	["Varus"]                      = {_Q,_R},
+   	["Vayne"]                      = {_E},
+   	["Veigar"]                      = {_R},
+   	["Twistedfate"]                      = {_Q},
+   	["Velkoz"]                      = {_Q,_W},
+   	["Viktor"]                      = {_E},
+   	["Xerath"]                      = {_Q},
+   	["Zed"]                      = {_Q},
+   	["Ziggs"]                      = {_Q, _R},
+   	["Zyra"]                      = {_E}
+}
+
+OnProcessSpell(function(unit, spell)
+myHero = GetMyHero()
+if Yasuo.Wall.W:Value() then
+if unit and GetTeam(unit) ~= GetTeam(myHero) and GetObjectType(unit) == GetObjectType(myHero) and GoS:GetDistance(unit) < 1500 then
+local unispells = WALL_SPELLS[GetObjectName(unit)]
+if myHero == spell.target and unispells and GetRange(unit) >= 450 and GoS:CalcDamage(unit, myHero, GetBonusDmg(unit)+GetBaseDamage(unit))/GetCurrentHP(myHero) > 0.1337 and not spell.name:lower():find("attack") then
+local wPos = GetOrigin(unit)
+CastSkillShot(_W, wPos.x, wPos.y, wPos.z)
+elseif spell.endPos and not spell.name:lower():find("attack") then
+local makeUpPos = GenerateSpellPos(GetOrigin(unit), spell.endPos, GoS:GetDistance(unit, myHero))
+if GoS:GetDistanceSqr(makeUpPos) < (GetHitBox(myHero)*3)^2 or GoS:GetDistanceSqr(spell.endPos) < (GetHitBox(myHero)*3)^2 then
+local wPos = GetOrigin(unit)
+CastSkillShot(_W, wPos.x, wPos.y, wPos.z)
+end
+end
+end
+end
+end)
 
 for _,minion in pairs(GoS:GetAllMinions(MINION_ENEMY)) do
 
@@ -283,11 +377,11 @@ local mousePos = GetMousePos()
 
 end
 
-if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "YasuoQW" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,475,3,100,0xffffff00) end
+if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "YasuoQW" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,475,1,100,0xffffff00) end
 
-if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "yasuoq2w" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,475,3,100,0xffffff00) end
+if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "yasuoq2w" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,475,1,100,0xffffff00) end
 
-if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "yasuoq3w" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,3,100,0xffffff00) end
+if YasuoMenu.Drawings.Q:Value() and GetCastName(myHero, _Q) == "yasuoq3w" then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,1000,1,100,0xffffff00) end
 
 if YasuoMenu.Drawings.E:Value() then DrawCircle(GoS:myHeroPos().x, GoS:myHeroPos().y, GoS:myHeroPos().z,475,3,100,0xffffff00) end
 
